@@ -68,6 +68,21 @@
             this.controlsTab = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label21 = new System.Windows.Forms.Label();
+            this.lengthOblique = new System.Windows.Forms.NumericUpDown();
+            this.label20 = new System.Windows.Forms.Label();
+            this.angleAlpha = new System.Windows.Forms.NumericUpDown();
+            this.obliqueButton = new System.Windows.Forms.Button();
+            this.frontalProjection = new System.Windows.Forms.Button();
+            this.horizontalButton = new System.Windows.Forms.Button();
+            this.profileButton = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.axonometricButton = new System.Windows.Forms.Button();
+            this.label19 = new System.Windows.Forms.Label();
+            this.anglePsi = new System.Windows.Forms.NumericUpDown();
+            this.angleFi = new System.Windows.Forms.NumericUpDown();
+            this.label18 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.canvas)).BeginInit();
             this.rotateGroup.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.angleZ)).BeginInit();
@@ -89,6 +104,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.scaleX)).BeginInit();
             this.controlsTab.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.lengthOblique)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.angleAlpha)).BeginInit();
+            this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.anglePsi)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.angleFi)).BeginInit();
             this.SuspendLayout();
             // 
             // canvas
@@ -627,12 +649,220 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.groupBox2);
+            this.tabPage2.Controls.Add(this.frontalProjection);
+            this.tabPage2.Controls.Add(this.horizontalButton);
+            this.tabPage2.Controls.Add(this.profileButton);
+            this.tabPage2.Controls.Add(this.groupBox1);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage2.Size = new System.Drawing.Size(247, 388);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Проекции";
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.label21);
+            this.groupBox2.Controls.Add(this.lengthOblique);
+            this.groupBox2.Controls.Add(this.label20);
+            this.groupBox2.Controls.Add(this.angleAlpha);
+            this.groupBox2.Controls.Add(this.obliqueButton);
+            this.groupBox2.Location = new System.Drawing.Point(6, 84);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(235, 72);
+            this.groupBox2.TabIndex = 52;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Косоугольная";
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(132, 21);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(16, 13);
+            this.label21.TabIndex = 54;
+            this.label21.Text = "L:";
+            // 
+            // lengthOblique
+            // 
+            this.lengthOblique.Location = new System.Drawing.Point(154, 19);
+            this.lengthOblique.Minimum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            -2147483648});
+            this.lengthOblique.Name = "lengthOblique";
+            this.lengthOblique.Size = new System.Drawing.Size(75, 20);
+            this.lengthOblique.TabIndex = 53;
+            this.lengthOblique.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(7, 21);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(17, 13);
+            this.label20.TabIndex = 52;
+            this.label20.Text = "α:";
+            // 
+            // angleAlpha
+            // 
+            this.angleAlpha.Location = new System.Drawing.Point(30, 19);
+            this.angleAlpha.Maximum = new decimal(new int[] {
+            360,
+            0,
+            0,
+            0});
+            this.angleAlpha.Minimum = new decimal(new int[] {
+            360,
+            0,
+            0,
+            -2147483648});
+            this.angleAlpha.Name = "angleAlpha";
+            this.angleAlpha.Size = new System.Drawing.Size(74, 20);
+            this.angleAlpha.TabIndex = 51;
+            this.angleAlpha.Value = new decimal(new int[] {
+            45,
+            0,
+            0,
+            0});
+            // 
+            // obliqueButton
+            // 
+            this.obliqueButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.obliqueButton.Location = new System.Drawing.Point(154, 45);
+            this.obliqueButton.Name = "obliqueButton";
+            this.obliqueButton.Size = new System.Drawing.Size(75, 23);
+            this.obliqueButton.TabIndex = 46;
+            this.obliqueButton.Text = "Применить";
+            this.obliqueButton.UseVisualStyleBackColor = true;
+            this.obliqueButton.Click += new System.EventHandler(this.ViewObliqueProjection);
+            // 
+            // frontalProjection
+            // 
+            this.frontalProjection.Location = new System.Drawing.Point(6, 322);
+            this.frontalProjection.Name = "frontalProjection";
+            this.frontalProjection.Size = new System.Drawing.Size(110, 23);
+            this.frontalProjection.TabIndex = 54;
+            this.frontalProjection.Text = "Фронтальная";
+            this.frontalProjection.UseVisualStyleBackColor = true;
+            this.frontalProjection.Click += new System.EventHandler(this.ViewFrontalProjection);
+            // 
+            // horizontalButton
+            // 
+            this.horizontalButton.Location = new System.Drawing.Point(6, 351);
+            this.horizontalButton.Name = "horizontalButton";
+            this.horizontalButton.Size = new System.Drawing.Size(110, 23);
+            this.horizontalButton.TabIndex = 53;
+            this.horizontalButton.Text = "Горизонтальная";
+            this.horizontalButton.UseVisualStyleBackColor = true;
+            this.horizontalButton.Click += new System.EventHandler(this.ViewHorizontalProjection);
+            // 
+            // profileButton
+            // 
+            this.profileButton.Location = new System.Drawing.Point(131, 322);
+            this.profileButton.Name = "profileButton";
+            this.profileButton.Size = new System.Drawing.Size(110, 23);
+            this.profileButton.TabIndex = 52;
+            this.profileButton.Text = "Профильная";
+            this.profileButton.UseVisualStyleBackColor = true;
+            this.profileButton.Click += new System.EventHandler(this.ViewProfileProjection);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.axonometricButton);
+            this.groupBox1.Controls.Add(this.label19);
+            this.groupBox1.Controls.Add(this.anglePsi);
+            this.groupBox1.Controls.Add(this.angleFi);
+            this.groupBox1.Controls.Add(this.label18);
+            this.groupBox1.Location = new System.Drawing.Point(6, 6);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(235, 72);
+            this.groupBox1.TabIndex = 51;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Аксономтрическая";
+            // 
+            // axonometricButton
+            // 
+            this.axonometricButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.axonometricButton.Location = new System.Drawing.Point(154, 45);
+            this.axonometricButton.Name = "axonometricButton";
+            this.axonometricButton.Size = new System.Drawing.Size(75, 23);
+            this.axonometricButton.TabIndex = 46;
+            this.axonometricButton.Text = "Применить";
+            this.axonometricButton.UseVisualStyleBackColor = true;
+            this.axonometricButton.Click += new System.EventHandler(this.ViewAxonometricProjection);
+            // 
+            // label19
+            // 
+            this.label19.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(130, 21);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(18, 13);
+            this.label19.TabIndex = 50;
+            this.label19.Text = "φ:";
+            // 
+            // anglePsi
+            // 
+            this.anglePsi.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.anglePsi.Location = new System.Drawing.Point(30, 19);
+            this.anglePsi.Maximum = new decimal(new int[] {
+            360,
+            0,
+            0,
+            0});
+            this.anglePsi.Minimum = new decimal(new int[] {
+            360,
+            0,
+            0,
+            -2147483648});
+            this.anglePsi.Name = "anglePsi";
+            this.anglePsi.Size = new System.Drawing.Size(75, 20);
+            this.anglePsi.TabIndex = 47;
+            this.anglePsi.Value = new decimal(new int[] {
+            45,
+            0,
+            0,
+            0});
+            // 
+            // angleFi
+            // 
+            this.angleFi.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.angleFi.Location = new System.Drawing.Point(154, 19);
+            this.angleFi.Maximum = new decimal(new int[] {
+            360,
+            0,
+            0,
+            0});
+            this.angleFi.Minimum = new decimal(new int[] {
+            360,
+            0,
+            0,
+            -2147483648});
+            this.angleFi.Name = "angleFi";
+            this.angleFi.Size = new System.Drawing.Size(75, 20);
+            this.angleFi.TabIndex = 48;
+            this.angleFi.Value = new decimal(new int[] {
+            45,
+            0,
+            0,
+            0});
+            // 
+            // label18
+            // 
+            this.label18.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(6, 21);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(18, 13);
+            this.label18.TabIndex = 49;
+            this.label18.Text = "ψ:";
             // 
             // MainForm
             // 
@@ -668,6 +898,15 @@
             ((System.ComponentModel.ISupportInitialize)(this.scaleX)).EndInit();
             this.controlsTab.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.lengthOblique)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.angleAlpha)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.anglePsi)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.angleFi)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -714,5 +953,20 @@
         private System.Windows.Forms.TabControl controlsTab;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button axonometricButton;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.NumericUpDown anglePsi;
+        private System.Windows.Forms.NumericUpDown angleFi;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Button profileButton;
+        private System.Windows.Forms.Button horizontalButton;
+        private System.Windows.Forms.Button frontalProjection;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.NumericUpDown lengthOblique;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.NumericUpDown angleAlpha;
+        private System.Windows.Forms.Button obliqueButton;
     }
 }

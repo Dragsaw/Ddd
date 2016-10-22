@@ -15,7 +15,7 @@ namespace Ddd.App
         DddObjects.Figure figure;
         DddObjects.Figure coordinates;
 
-        private DddObjects.Point DefaultPoint { get { return new DddObjects.Point(canvasBitmap.Width / 2, 0, canvasBitmap.Height / 2); } }
+        private DddObjects.Point DefaultPoint { get { return new DddObjects.Point(canvasBitmap.Width / 2, canvasBitmap.Height / 2, 0); } }
 
         public MainForm()
         {
@@ -47,7 +47,7 @@ namespace Ddd.App
 
         private void Create(object sender, System.EventArgs e)
         {
-            currentPlane = PlaneFactory.CreateXZ(DefaultPoint);
+            currentPlane = PlaneFactory.CreateXY(DefaultPoint);
             var l = (int)length.Value;
             var w = (int)width.Value;
             var h = (int)height.Value;
@@ -61,7 +61,7 @@ namespace Ddd.App
 
         private void Rotate(object sender, System.EventArgs e)
         {
-            currentPlane = PlaneFactory.CreateXZ(DefaultPoint);
+            currentPlane = PlaneFactory.CreateXY(DefaultPoint);
             var rotateTransformation = TransformationsFactory.CreateRotateTransformation(
                 (double)angleX.Value,
                 (double)angleY.Value,
@@ -72,7 +72,7 @@ namespace Ddd.App
 
         private void Shift(object sender, System.EventArgs e)
         {
-            currentPlane = PlaneFactory.CreateXZ(DefaultPoint);
+            currentPlane = PlaneFactory.CreateXY(DefaultPoint);
             var moveTransformation = TransformationsFactory.CreateMoveTransformation(
                 (double)moveX.Value,
                 (double)moveY.Value,
@@ -82,12 +82,56 @@ namespace Ddd.App
 
         private void Scale(object sender, System.EventArgs e)
         {
-            currentPlane = PlaneFactory.CreateXZ(DefaultPoint);
+            currentPlane = PlaneFactory.CreateXY(DefaultPoint);
             var scaleTransformation = TransformationsFactory.CreateScaleTransformation(
                 (double)scaleX.Value,
                 (double)scaleY.Value,
                 (double)scaleZ.Value);
             figure.ApplyTransformation(scaleTransformation);
+        }
+
+        private void ViewAxonometricProjection(object sender, System.EventArgs e)
+        {
+            currentPlane = PlaneFactory.CreateXY(DefaultPoint);
+            var axonometricTransformation = TransformationsFactory.CreateAxonometricProjection(
+                (double)anglePsi.Value,
+                (double)angleFi.Value);
+            coordinates.ApplyTransformation(axonometricTransformation);
+            figure.ApplyTransformation(axonometricTransformation);
+        }
+
+        private void ViewProfileProjection(object sender, System.EventArgs e)
+        {
+            currentPlane = PlaneFactory.CreateZY(DefaultPoint);
+            var profileTransofrmation = TransformationsFactory.CreateProfileProjection();
+            coordinates.ApplyTransformation(profileTransofrmation);
+            figure.ApplyTransformation(profileTransofrmation);
+        }
+
+        private void ViewHorizontalProjection(object sender, System.EventArgs e)
+        {
+            currentPlane = PlaneFactory.CreateXZ(DefaultPoint);
+            var horizontalTransofrmation = TransformationsFactory.CreateHorizontalProjection();
+            coordinates.ApplyTransformation(horizontalTransofrmation);
+            figure.ApplyTransformation(horizontalTransofrmation);
+        }
+
+        private void ViewFrontalProjection(object sender, System.EventArgs e)
+        {
+            currentPlane = PlaneFactory.CreateXY(DefaultPoint);
+            var frontalTransofrmation = TransformationsFactory.CreateFrontalProjection();
+            coordinates.ApplyTransformation(frontalTransofrmation);
+            figure.ApplyTransformation(frontalTransofrmation);
+        }
+
+        private void ViewObliqueProjection(object sender, System.EventArgs e)
+        {
+            currentPlane = PlaneFactory.CreateXY(DefaultPoint);
+            var obloqueTransofrmation = TransformationsFactory.CreateObliqueProjection(
+                (double)angleAlpha.Value,
+                (double)lengthOblique.Value);
+            coordinates.ApplyTransformation(obloqueTransofrmation);
+            figure.ApplyTransformation(obloqueTransofrmation);
         }
     }
 }

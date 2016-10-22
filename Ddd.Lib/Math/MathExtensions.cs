@@ -19,9 +19,9 @@ namespace Ddd.Lib.Math
 
             for (int i = 0; i < n; i++)
             {
-                var y = (int)SysMath.Round(r * SysMath.Sin(grad * SysMath.PI / 180));
+                var z = (int)SysMath.Round(r * SysMath.Sin(grad * SysMath.PI / 180));
                 var x = (int)SysMath.Round(r * SysMath.Cos(grad * SysMath.PI / 180));
-                points.Add(new Point(x + center.X, y + center.Y, center.Z));
+                points.Add(new Point(x + center.X, center.Y, z + center.Z));
                 grad += alpha;
             }
 

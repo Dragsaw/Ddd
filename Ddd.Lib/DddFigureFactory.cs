@@ -15,9 +15,9 @@ namespace Ddd.Lib
             var xPoint1 = new Point(initialPoint.X, initialPoint.Y, initialPoint.Z);
             var xPoint2 = new Point(initialPoint.X + 200, initialPoint.Y, initialPoint.Z);
             var yPoint1 = new Point(initialPoint.X, initialPoint.Y, initialPoint.Z);
-            var yPoint2 = new Point(initialPoint.X, initialPoint.Y + 200, initialPoint.Z);
+            var yPoint2 = new Point(initialPoint.X, initialPoint.Y - 200, initialPoint.Z);
             var zPoint1 = new Point(initialPoint.X, initialPoint.Y, initialPoint.Z);
-            var zPoint2 = new Point(initialPoint.X, initialPoint.Y, initialPoint.Z - 200);
+            var zPoint2 = new Point(initialPoint.X, initialPoint.Y, initialPoint.Z + 200);
             var xLine = new Line(xPoint1, xPoint2);
             var yLine = new Line(yPoint1, yPoint2);
             var zLine = new Line(zPoint1, zPoint2);
@@ -63,8 +63,8 @@ namespace Ddd.Lib
             var f5 = new Face(l6, l9, l12, l3);
             var f6 = new Face(l5, l8, l11, l4);
 
-            var bottomCircleCenter = new Point(initialPoint.X, initialPoint.Y, initialPoint.Z - height / 2);
-            var topCircleCenter = new Point(initialPoint.X, initialPoint.Y, initialPoint.Z + height / 2);
+            var bottomCircleCenter = new Point(initialPoint.X, initialPoint.Y - height / 2, initialPoint.Z);
+            var topCircleCenter = new Point(initialPoint.X, initialPoint.Y + height / 2, initialPoint.Z);
 
             var bottomCirclePoints = bottomCircleCenter.CreateCircleApproximation(r, n);
             var topCirclePoints = topCircleCenter.CreateCircleApproximation(r, n);

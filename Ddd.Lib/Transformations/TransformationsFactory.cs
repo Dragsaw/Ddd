@@ -15,7 +15,7 @@ namespace Ddd.Lib.Transformations
             var rotateX = new Matrix(new[,] {
                 { 1, 0, 0, 0 },
                 {0, SysMath.Cos(angleX), SysMath.Sin(angleX), 0 },
-                { 0, -SysMath.Sin(angleX), (float)SysMath.Cos(angleX), 0},
+                { 0, -SysMath.Sin(angleX), SysMath.Cos(angleX), 0},
                 { 0, 0, 0, 1 }
             });
 
@@ -57,6 +57,71 @@ namespace Ddd.Lib.Transformations
                 {0, scaleY, 0, 0},
                 {0, 0, scaleZ, 0},
                 {0, 0, 0, 1 }
+            });
+
+            return new Transformation(transformationMatrix);
+        }
+
+        public static Transformation CreateAxonometricProjection(double psi, double fi)
+        {
+            psi = psi.ToRadians();
+            fi = fi.ToRadians();
+
+            var transformationMatrix = new Matrix(new[,] {
+                { SysMath.Cos(psi), SysMath.Sin(psi) * SysMath.Sin(fi), 0, 0},
+                { 0, SysMath.Cos(fi), 0, 0},
+                { SysMath.Sin(psi), -SysMath.Sin(fi) * SysMath.Cos(psi), 0, 0},
+                { 0, 0, 0, 1 }
+            });
+
+            return new Transformation(transformationMatrix);
+        }
+
+        public static Transformation CreateProfileProjection()
+        {
+            var transformationMatrix = new Matrix(new double[,] {
+                { 0, 0, 0, 0},
+                { 0, 1, 0, 0},
+                { 0, 0, 1, 0},
+                { 0, 0, 0, 1 }
+            });
+
+            return new Transformation(transformationMatrix);
+        }
+
+        public static Transformation CreateHorizontalProjection()
+        {
+            var transformationMatrix = new Matrix(new double[,] {
+                { 1, 0, 0, 0},
+                { 0, 0, 0, 0},
+                { 0, 0, 1, 0},
+                { 0, 0, 0, 1 }
+            });
+
+            return new Transformation(transformationMatrix);
+        }
+
+        public static Transformation CreateFrontalProjection()
+        {
+            var transformationMatrix = new Matrix(new double[,] {
+                { 1, 0, 0, 0},
+                { 0, 1, 0, 0},
+                { 0, 0, 0, 0},
+                { 0, 0, 0, 1 }
+            });
+
+            return new Transformation(transformationMatrix);
+        }
+
+        public static Transformation CreateObliqueProjection(double alpha, double length)
+        {
+            alpha = alpha.ToRadians();
+
+            var transformationMatrix = new Matrix(new double[,] {
+                { 1, 0, 0, 0},
+                { 0, 1, 0, 0},
+                { length * SysMath.Cos(alpha), length * SysMath.Sin(alpha), 0, 0},
+                { 0, 0, 0, 1 }
             });
 
             return new Transformation(transformationMatrix);
