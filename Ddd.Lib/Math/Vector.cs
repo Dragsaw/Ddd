@@ -1,0 +1,20 @@
+﻿namespace Ddd.Lib.Math
+{
+    public class Vector : MatrixBase
+    {
+        public Vector(params double[] rows)
+        {
+            Rows = new double[1, rows.Length];
+            for (int i = 0; i < rows.Length; i++)
+            {
+                this[i] = rows[i];
+            }
+        }
+
+        public double this[int index]
+        {
+            get { return Rows[0, index]; }
+            set { Rows[0, index] = value; }
+        }
+    }
+}
