@@ -36,14 +36,14 @@ namespace Ddd.Lib
         /// <returns></returns>
         public static Figure Create(Point initialPoint, double length, double width, double height, double r, int n)
         {
-            var p1 = new Point(initialPoint.X + length / 2, initialPoint.Y - width / 2, initialPoint.Z + height / 2);
-            var p2 = new Point(initialPoint.X + length / 2, initialPoint.Y - width / 2, initialPoint.Z - height / 2);
-            var p3 = new Point(initialPoint.X + length / 2, initialPoint.Y + width / 2, initialPoint.Z + height / 2);
-            var p4 = new Point(initialPoint.X + length / 2, initialPoint.Y + width / 2, initialPoint.Z - height / 2);
-            var p5 = new Point(initialPoint.X - length / 2, initialPoint.Y - width / 2, initialPoint.Z + height / 2);
-            var p6 = new Point(initialPoint.X - length / 2, initialPoint.Y - width / 2, initialPoint.Z - height / 2);
-            var p7 = new Point(initialPoint.X - length / 2, initialPoint.Y + width / 2, initialPoint.Z + height / 2);
-            var p8 = new Point(initialPoint.X - length / 2, initialPoint.Y + width / 2, initialPoint.Z - height / 2);
+            var p1 = new Point(initialPoint.X + length / 2, initialPoint.Y + height / 2, initialPoint.Z - width / 2);
+            var p2 = new Point(initialPoint.X + length / 2, initialPoint.Y - height / 2, initialPoint.Z - width / 2);
+            var p3 = new Point(initialPoint.X + length / 2, initialPoint.Y + height / 2, initialPoint.Z + width / 2);
+            var p4 = new Point(initialPoint.X + length / 2, initialPoint.Y - height / 2, initialPoint.Z + width / 2);
+            var p5 = new Point(initialPoint.X - length / 2, initialPoint.Y + height / 2, initialPoint.Z - width / 2);
+            var p6 = new Point(initialPoint.X - length / 2, initialPoint.Y - height / 2, initialPoint.Z - width / 2);
+            var p7 = new Point(initialPoint.X - length / 2, initialPoint.Y + height / 2, initialPoint.Z + width / 2);
+            var p8 = new Point(initialPoint.X - length / 2, initialPoint.Y - height / 2, initialPoint.Z + width / 2);
             var l1 = new Line(p1, p2);
             var l2 = new Line(p3, p4);
             var l3 = new Line(p2, p4);
@@ -63,56 +63,50 @@ namespace Ddd.Lib
             var f5 = new Face(l6, l9, l12, l3);
             var f6 = new Face(l5, l8, l11, l4);
 
-            var bottomCircleCenter = new Point(initialPoint.X, initialPoint.Y - height / 2, initialPoint.Z);
-            var topCircleCenter = new Point(initialPoint.X, initialPoint.Y + height / 2, initialPoint.Z);
-
+            var bottomCircleCenter = new Point(initialPoint.X, initialPoint.Y + height / 2, initialPoint.Z);
             var bottomCirclePoints = bottomCircleCenter.CreateCircleApproximation(r, n);
-            var topCirclePoints = topCircleCenter.CreateCircleApproximation(r, n);
-
             var bottomCircleLines = JoinCircleLines(bottomCirclePoints);
-            var topCircleLines = JoinCircleLines(topCirclePoints);
-
             var bottomCircle = new Face(bottomCircleLines.ElementAt(0), bottomCircleLines.ElementAt(1), bottomCircleLines.ElementAt(2), bottomCircleLines.Skip(3).ToArray());
-            var topCircle = new Face(topCircleLines.ElementAt(0), topCircleLines.ElementAt(1), topCircleLines.ElementAt(2), topCircleLines.Skip(3).ToArray());
 
-            var cilinderLines = JoinCilinderLines(bottomCirclePoints, topCirclePoints);
-            var ciliderFaces = JoinCilinderFaces(cilinderLines, bottomCircleLines, topCircleLines);
+            var topConePoint = new Point(initialPoint.X, initialPoint.Y - height / 2, initialPoint.Z);
+            var coneLines = ConnectCircleToPoint(bottomCirclePoints, topConePoint);
+            var coneFaces = JoinConeFaces(bottomCircleLines, coneLines);
 
-            var figureFaces = new List<Face> { f1, f2, f3, f4, f5, f6, bottomCircle, topCircle, };
-            figureFaces.AddRange(ciliderFaces);
+            var figureFaces = new List<Face> { f1, f2, f3, f4, f5, f6, bottomCircle };
+            figureFaces.AddRange(coneFaces);
 
             return new Figure(figureFaces.ToArray());
         }
 
-        private static IEnumerable<Face> JoinCilinderFaces(IEnumerable<Line> cilinderLines, IEnumerable<Line> bottomCircleLines, IEnumerable<Line> topCircleLines)
+        private static IEnumerable<Face> JoinConeFaces(IEnumerable<Line> bottomCircleLines, IEnumerable<Line> coneLines)
         {
-            var count = cilinderLines.Count();
-            var faces = new Face[count];
+            var count = bottomCircleLines.Count();
             for (int i = 0; i < count; i++)
             {
-                faces[i] = new Face(cilinderLines.ElementAt(i), cilinderLines.ElementAt((i + 1) % count), bottomCircleLines.ElementAt(i), topCircleLines.ElementAt(i));
+                yield return new Face(
+                    bottomCircleLines.ElementAt(i),
+                    coneLines.ElementAt(i),
+                    coneLines.ElementAt((i + 1) % count));
             }
-
-            return faces;
         }
 
-        private static IEnumerable<Line> JoinCilinderLines(IList<Point> bottomCirclePoints, IList<Point> topCirclePoints)
+        private static IEnumerable<Line> ConnectCircleToPoint(IList<Point> bottomCirclePoints, Point topConePoint)
         {
-            return bottomCirclePoints.Select((p, i) => new Line(p, topCirclePoints.ElementAt(i)));
+            foreach (var point in bottomCirclePoints)
+            {
+                yield return new Line(point, topConePoint);
+            }
         }
 
         private static IEnumerable<Line> JoinCircleLines(IEnumerable<Point> points)
         {
-            var lines = new List<Line>();
             var count = points.Count();
             for (int i = 0; i < count; i++)
             {
                 var point1 = points.ElementAt(i);
                 var point2 = points.ElementAt((i + 1) % count);
-                lines.Add(new Line(point1, point2));
+                yield return new Line(point1, point2);
             }
-
-            return lines;
         }
     }
 }
