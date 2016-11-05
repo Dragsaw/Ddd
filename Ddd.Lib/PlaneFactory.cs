@@ -22,7 +22,7 @@ namespace Ddd.Lib
                 initialPoint = new Point(0, 0, 0);
             }
 
-            return new Plane(p => p.X + initialPoint.X, p => p.Y + initialPoint.Y);
+            return new Plane(p => p.X + initialPoint.X, p => -p.Y + initialPoint.Y);
         }
 
         public static Plane CreateZY(Point initialPoint)

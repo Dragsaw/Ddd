@@ -15,9 +15,9 @@ namespace Ddd.Lib
             var xPoint1 = new Point(initialPoint.X, initialPoint.Y, initialPoint.Z);
             var xPoint2 = new Point(initialPoint.X + 200, initialPoint.Y, initialPoint.Z);
             var yPoint1 = new Point(initialPoint.X, initialPoint.Y, initialPoint.Z);
-            var yPoint2 = new Point(initialPoint.X, initialPoint.Y - 200, initialPoint.Z);
+            var yPoint2 = new Point(initialPoint.X, initialPoint.Y + 200, initialPoint.Z);
             var zPoint1 = new Point(initialPoint.X, initialPoint.Y, initialPoint.Z);
-            var zPoint2 = new Point(initialPoint.X, initialPoint.Y, initialPoint.Z + 200);
+            var zPoint2 = new Point(initialPoint.X, initialPoint.Y, initialPoint.Z - 200);
             var xLine = new Line(xPoint1, xPoint2);
             var yLine = new Line(yPoint1, yPoint2);
             var zLine = new Line(zPoint1, zPoint2);
@@ -36,14 +36,14 @@ namespace Ddd.Lib
         /// <returns></returns>
         public static Figure Create(Point initialPoint, double length, double width, double height, double r, int n)
         {
-            var p1 = new Point(initialPoint.X + length / 2, initialPoint.Y + height / 2, initialPoint.Z - width / 2);
-            var p2 = new Point(initialPoint.X + length / 2, initialPoint.Y - height / 2, initialPoint.Z - width / 2);
-            var p3 = new Point(initialPoint.X + length / 2, initialPoint.Y + height / 2, initialPoint.Z + width / 2);
-            var p4 = new Point(initialPoint.X + length / 2, initialPoint.Y - height / 2, initialPoint.Z + width / 2);
-            var p5 = new Point(initialPoint.X - length / 2, initialPoint.Y + height / 2, initialPoint.Z - width / 2);
-            var p6 = new Point(initialPoint.X - length / 2, initialPoint.Y - height / 2, initialPoint.Z - width / 2);
-            var p7 = new Point(initialPoint.X - length / 2, initialPoint.Y + height / 2, initialPoint.Z + width / 2);
-            var p8 = new Point(initialPoint.X - length / 2, initialPoint.Y - height / 2, initialPoint.Z + width / 2);
+            var p1 = new Point(initialPoint.X + length / 2, initialPoint.Y - height / 2, initialPoint.Z - width / 2);
+            var p2 = new Point(initialPoint.X + length / 2, initialPoint.Y + height / 2, initialPoint.Z - width / 2);
+            var p3 = new Point(initialPoint.X + length / 2, initialPoint.Y - height / 2, initialPoint.Z + width / 2);
+            var p4 = new Point(initialPoint.X + length / 2, initialPoint.Y + height / 2, initialPoint.Z + width / 2);
+            var p5 = new Point(initialPoint.X - length / 2, initialPoint.Y - height / 2, initialPoint.Z - width / 2);
+            var p6 = new Point(initialPoint.X - length / 2, initialPoint.Y + height / 2, initialPoint.Z - width / 2);
+            var p7 = new Point(initialPoint.X - length / 2, initialPoint.Y - height / 2, initialPoint.Z + width / 2);
+            var p8 = new Point(initialPoint.X - length / 2, initialPoint.Y + height / 2, initialPoint.Z + width / 2);
             var l1 = new Line(p1, p2);
             var l2 = new Line(p3, p4);
             var l3 = new Line(p2, p4);
@@ -63,12 +63,12 @@ namespace Ddd.Lib
             var f5 = new Face(l6, l9, l12, l3);
             var f6 = new Face(l5, l8, l11, l4);
 
-            var bottomCircleCenter = new Point(initialPoint.X, initialPoint.Y + height / 2, initialPoint.Z);
+            var bottomCircleCenter = new Point(initialPoint.X, initialPoint.Y - height / 2, initialPoint.Z);
             var bottomCirclePoints = bottomCircleCenter.CreateCircleApproximation(r, n);
             var bottomCircleLines = JoinCircleLines(bottomCirclePoints);
             var bottomCircle = new Face(bottomCircleLines.ElementAt(0), bottomCircleLines.ElementAt(1), bottomCircleLines.ElementAt(2), bottomCircleLines.Skip(3).ToArray());
 
-            var topConePoint = new Point(initialPoint.X, initialPoint.Y - height / 2, initialPoint.Z);
+            var topConePoint = new Point(initialPoint.X, initialPoint.Y + height / 2, initialPoint.Z);
             var coneLines = ConnectCircleToPoint(bottomCirclePoints, topConePoint);
             var coneFaces = JoinConeFaces(bottomCircleLines, coneLines);
 
