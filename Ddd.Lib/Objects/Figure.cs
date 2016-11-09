@@ -28,16 +28,21 @@ namespace Ddd.Lib.Objects
 
         public void ApplyTransformation(Transformation transformation)
         {
-            var points = Faces.SelectMany(f => f.Lines.SelectMany(l => l.Points)).Distinct();
             var transformationMatrix = transformation.TransformationMatrix;
+            ApplyTransformation(p => p.Multiply(transformationMatrix));
+        }
+
+        public void ApplyTransformation(Action<Point> transformationFunc)
+        {
+            var points = Faces.SelectMany(f => f.Lines.SelectMany(l => l.Points)).Distinct();
             foreach (var point in points)
             {
-                point.Multiply(transformationMatrix);
+                transformationFunc(point);
             }
 
-            if(OnTransformationCompleted != null)
+            if (OnTransformationCompleted != null)
             {
-                OnTransformationCompleted(this, new TransformationCompletedEventArgs(transformation));
+                OnTransformationCompleted(this, null);
             }
         }
     }

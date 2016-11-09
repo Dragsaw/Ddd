@@ -15,7 +15,7 @@ namespace Ddd.App
         DddObjects.Figure figure;
         DddObjects.Figure coordinates;
 
-        private DddObjects.Point DefaultPoint { get { return new DddObjects.Point(canvasBitmap.Width / 2, canvasBitmap.Height / 2, 0); } }
+        private DddObjects.Point DefaultPoint { get { return new DddObjects.Point(canvas.Width / 2, canvas.Height / 2, 0); } }
 
         public MainForm()
         {
@@ -27,7 +27,9 @@ namespace Ddd.App
 
         public void RedrawFigure(object sender, TransformationCompletedEventArgs e)
         {
-            graphics.Clear(Color.Transparent);
+            canvasBitmap = new Bitmap(canvas.Width, canvas.Height);
+            canvas.Image = canvasBitmap;
+            graphics = Graphics.FromImage(canvasBitmap);
             var figure = sender as DddObjects.Figure;
             DrawFigure(figure);
             DrawFigure(coordinates, Color.Blue);
@@ -127,11 +129,30 @@ namespace Ddd.App
         private void ViewObliqueProjection(object sender, System.EventArgs e)
         {
             currentPlane = PlaneFactory.CreateXY(DefaultPoint);
-            var obloqueTransofrmation = TransformationsFactory.CreateObliqueProjection(
+            var obliqueTransofrmation = TransformationsFactory.CreateObliqueProjection(
                 (double)angleAlpha.Value,
                 (double)lengthOblique.Value);
-            coordinates.ApplyTransformation(obloqueTransofrmation);
-            figure.ApplyTransformation(obloqueTransofrmation);
+            coordinates.ApplyTransformation(obliqueTransofrmation);
+            figure.ApplyTransformation(obliqueTransofrmation);
+        }
+
+        private void ViewViewTransformationProjection(object sender, System.EventArgs e)
+        {
+            currentPlane = PlaneFactory.CreateXY(DefaultPoint);
+            var viewTransformation = TransformationsFactory.CreateViewTransformation(
+                (double)anglePhiView.Value,
+                (double)angleTheta.Value,
+                (double)rho.Value);
+            coordinates.ApplyTransformation(viewTransformation);
+            figure.ApplyTransformation(viewTransformation);
+        }
+
+        private void ViewPerspectiveProjection(object sender, System.EventArgs e)
+        {
+            currentPlane = PlaneFactory.CreateXY(DefaultPoint);
+            var perspectiveProjection = TransformationsFactory.CreatePerspectiveProjection((double)d.Value);
+            coordinates.ApplyTransformation(perspectiveProjection);
+            figure.ApplyTransformation(perspectiveProjection);
         }
     }
 }

@@ -68,6 +68,18 @@
             this.controlsTab = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.perspectiveGroup = new System.Windows.Forms.GroupBox();
+            this.label22 = new System.Windows.Forms.Label();
+            this.perspectieButton = new System.Windows.Forms.Button();
+            this.d = new System.Windows.Forms.NumericUpDown();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.label17 = new System.Windows.Forms.Label();
+            this.anglePhiView = new System.Windows.Forms.NumericUpDown();
+            this.label15 = new System.Windows.Forms.Label();
+            this.rho = new System.Windows.Forms.NumericUpDown();
+            this.label16 = new System.Windows.Forms.Label();
+            this.angleTheta = new System.Windows.Forms.NumericUpDown();
+            this.viewTransformButton = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label21 = new System.Windows.Forms.Label();
             this.lengthOblique = new System.Windows.Forms.NumericUpDown();
@@ -105,6 +117,12 @@
             this.controlsTab.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            this.perspectiveGroup.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.d)).BeginInit();
+            this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.anglePhiView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rho)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.angleTheta)).BeginInit();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.lengthOblique)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.angleAlpha)).BeginInit();
@@ -540,6 +558,11 @@
             // scaleZ
             // 
             this.scaleZ.DecimalPlaces = 1;
+            this.scaleZ.Increment = new decimal(new int[] {
+            5,
+            0,
+            0,
+            65536});
             this.scaleZ.Location = new System.Drawing.Point(175, 19);
             this.scaleZ.Maximum = new decimal(new int[] {
             99999,
@@ -572,6 +595,11 @@
             // scaleY
             // 
             this.scaleY.DecimalPlaces = 1;
+            this.scaleY.Increment = new decimal(new int[] {
+            5,
+            0,
+            0,
+            65536});
             this.scaleY.Location = new System.Drawing.Point(99, 19);
             this.scaleY.Maximum = new decimal(new int[] {
             99999,
@@ -604,6 +632,11 @@
             // scaleX
             // 
             this.scaleX.DecimalPlaces = 1;
+            this.scaleX.Increment = new decimal(new int[] {
+            5,
+            0,
+            0,
+            65536});
             this.scaleX.Location = new System.Drawing.Point(26, 19);
             this.scaleX.Maximum = new decimal(new int[] {
             99999,
@@ -626,6 +659,7 @@
             // 
             // controlsTab
             // 
+            this.controlsTab.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.controlsTab.Controls.Add(this.tabPage1);
             this.controlsTab.Controls.Add(this.tabPage2);
             this.controlsTab.Location = new System.Drawing.Point(480, 13);
@@ -649,6 +683,8 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.perspectiveGroup);
+            this.tabPage2.Controls.Add(this.groupBox3);
             this.tabPage2.Controls.Add(this.groupBox2);
             this.tabPage2.Controls.Add(this.frontalProjection);
             this.tabPage2.Controls.Add(this.horizontalButton);
@@ -660,6 +696,176 @@
             this.tabPage2.Size = new System.Drawing.Size(247, 388);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Проекции";
+            // 
+            // perspectiveGroup
+            // 
+            this.perspectiveGroup.Controls.Add(this.label22);
+            this.perspectiveGroup.Controls.Add(this.perspectieButton);
+            this.perspectiveGroup.Controls.Add(this.d);
+            this.perspectiveGroup.Location = new System.Drawing.Point(6, 236);
+            this.perspectiveGroup.Name = "perspectiveGroup";
+            this.perspectiveGroup.Size = new System.Drawing.Size(235, 72);
+            this.perspectiveGroup.TabIndex = 57;
+            this.perspectiveGroup.TabStop = false;
+            this.perspectiveGroup.Text = "Перспективная проекция";
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(7, 21);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(16, 13);
+            this.label22.TabIndex = 58;
+            this.label22.Text = "d:";
+            // 
+            // perspectieButton
+            // 
+            this.perspectieButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.perspectieButton.Location = new System.Drawing.Point(154, 45);
+            this.perspectieButton.Name = "perspectieButton";
+            this.perspectieButton.Size = new System.Drawing.Size(75, 23);
+            this.perspectieButton.TabIndex = 46;
+            this.perspectieButton.Text = "Применить";
+            this.perspectieButton.UseVisualStyleBackColor = true;
+            this.perspectieButton.Click += new System.EventHandler(this.ViewPerspectiveProjection);
+            // 
+            // d
+            // 
+            this.d.DecimalPlaces = 1;
+            this.d.Increment = new decimal(new int[] {
+            5,
+            0,
+            0,
+            65536});
+            this.d.Location = new System.Drawing.Point(30, 19);
+            this.d.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.d.Name = "d";
+            this.d.Size = new System.Drawing.Size(74, 20);
+            this.d.TabIndex = 57;
+            this.d.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.label17);
+            this.groupBox3.Controls.Add(this.anglePhiView);
+            this.groupBox3.Controls.Add(this.label15);
+            this.groupBox3.Controls.Add(this.rho);
+            this.groupBox3.Controls.Add(this.label16);
+            this.groupBox3.Controls.Add(this.angleTheta);
+            this.groupBox3.Controls.Add(this.viewTransformButton);
+            this.groupBox3.Location = new System.Drawing.Point(6, 162);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(235, 72);
+            this.groupBox3.TabIndex = 55;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Видовое преобразование";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(7, 47);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(18, 13);
+            this.label17.TabIndex = 56;
+            this.label17.Text = "φ:";
+            // 
+            // anglePhiView
+            // 
+            this.anglePhiView.Location = new System.Drawing.Point(30, 45);
+            this.anglePhiView.Maximum = new decimal(new int[] {
+            360,
+            0,
+            0,
+            0});
+            this.anglePhiView.Minimum = new decimal(new int[] {
+            360,
+            0,
+            0,
+            -2147483648});
+            this.anglePhiView.Name = "anglePhiView";
+            this.anglePhiView.Size = new System.Drawing.Size(74, 20);
+            this.anglePhiView.TabIndex = 55;
+            this.anglePhiView.Value = new decimal(new int[] {
+            45,
+            0,
+            0,
+            0});
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(132, 21);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(16, 13);
+            this.label15.TabIndex = 54;
+            this.label15.Text = "ρ:";
+            // 
+            // rho
+            // 
+            this.rho.Location = new System.Drawing.Point(154, 19);
+            this.rho.Minimum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            -2147483648});
+            this.rho.Name = "rho";
+            this.rho.Size = new System.Drawing.Size(75, 20);
+            this.rho.TabIndex = 53;
+            this.rho.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(7, 21);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(16, 13);
+            this.label16.TabIndex = 52;
+            this.label16.Text = "θ:";
+            // 
+            // angleTheta
+            // 
+            this.angleTheta.Location = new System.Drawing.Point(30, 19);
+            this.angleTheta.Maximum = new decimal(new int[] {
+            360,
+            0,
+            0,
+            0});
+            this.angleTheta.Minimum = new decimal(new int[] {
+            360,
+            0,
+            0,
+            -2147483648});
+            this.angleTheta.Name = "angleTheta";
+            this.angleTheta.Size = new System.Drawing.Size(74, 20);
+            this.angleTheta.TabIndex = 51;
+            this.angleTheta.Value = new decimal(new int[] {
+            45,
+            0,
+            0,
+            0});
+            // 
+            // viewTransformButton
+            // 
+            this.viewTransformButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.viewTransformButton.Location = new System.Drawing.Point(154, 45);
+            this.viewTransformButton.Name = "viewTransformButton";
+            this.viewTransformButton.Size = new System.Drawing.Size(75, 23);
+            this.viewTransformButton.TabIndex = 46;
+            this.viewTransformButton.Text = "Применить";
+            this.viewTransformButton.UseVisualStyleBackColor = true;
+            this.viewTransformButton.Click += new System.EventHandler(this.ViewViewTransformationProjection);
             // 
             // groupBox2
             // 
@@ -686,6 +892,12 @@
             // 
             // lengthOblique
             // 
+            this.lengthOblique.DecimalPlaces = 1;
+            this.lengthOblique.Increment = new decimal(new int[] {
+            5,
+            0,
+            0,
+            65536});
             this.lengthOblique.Location = new System.Drawing.Point(154, 19);
             this.lengthOblique.Minimum = new decimal(new int[] {
             100,
@@ -899,6 +1111,14 @@
             this.controlsTab.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
+            this.perspectiveGroup.ResumeLayout(false);
+            this.perspectiveGroup.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.d)).EndInit();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.anglePhiView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rho)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.angleTheta)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.lengthOblique)).EndInit();
@@ -968,5 +1188,17 @@
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.NumericUpDown angleAlpha;
         private System.Windows.Forms.Button obliqueButton;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.NumericUpDown anglePhiView;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.NumericUpDown rho;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.NumericUpDown angleTheta;
+        private System.Windows.Forms.Button viewTransformButton;
+        private System.Windows.Forms.GroupBox perspectiveGroup;
+        private System.Windows.Forms.Button perspectieButton;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.NumericUpDown d;
     }
 }

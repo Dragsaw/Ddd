@@ -1,6 +1,7 @@
 ﻿using System;
 using Ddd.Lib.Math;
 using SysMath = System.Math;
+using Ddd.Lib.Objects;
 
 namespace Ddd.Lib.Transformations
 {
@@ -44,7 +45,7 @@ namespace Ddd.Lib.Transformations
                 { 1, 0, 0, 0},
                 { 0, 1, 0, 0},
                 { 0, 0, 1, 0},
-                { deltaX, deltaY, deltaZ, 1}
+                { deltaX, deltaY, -deltaZ, 1}
             });
 
             return new Transformation(transformationMatrix);
@@ -125,6 +126,33 @@ namespace Ddd.Lib.Transformations
             });
 
             return new Transformation(transformationMatrix);
+        }
+
+        public static Transformation CreateViewTransformation(double phi, double theta, double rho)
+        {
+            phi = phi.ToRadians();
+            theta = theta.ToRadians();
+
+            var transformationMatrix = new Matrix(new double[,] {
+                { -SysMath.Sin(theta), -SysMath.Cos(phi)*SysMath.Cos(theta), -SysMath.Sin(phi)*SysMath.Cos(theta), 0},
+                { SysMath.Cos(theta), -SysMath.Cos(phi)*SysMath.Sin(theta), -SysMath.Sin(phi)*SysMath.Sin(theta), 0},
+                { 0, SysMath.Sin(phi), -SysMath.Cos(phi), 0},
+                { 0, 0, rho, 1 }
+            });
+
+            return new Transformation(transformationMatrix);
+        }
+
+        public static Action<Point> CreatePerspectiveProjection(double d)
+        {
+            var transformationAction = (Action<Point>)(p =>
+            {
+                var distance = SysMath.Abs(p.Z) < 0.1 ? 0.1 : p.Z;
+                p.X = p.X * d / distance;
+                p.Y = p.Y * d / distance;
+            });
+
+            return transformationAction;
         }
     }
 }
