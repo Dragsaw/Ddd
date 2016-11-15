@@ -145,6 +145,9 @@ namespace Ddd.App
                 (double)rho.Value);
             coordinates.ApplyTransformation(viewTransformation);
             figure.ApplyTransformation(viewTransformation);
+            var perspectiveProjection = TransformationsFactory.CreatePerspectiveProjection((double)d.Value);
+            coordinates.ApplyTransformation(perspectiveProjection);
+            figure.ApplyTransformation(perspectiveProjection);
         }
 
         private void ViewPerspectiveProjection(object sender, System.EventArgs e)

@@ -45,7 +45,7 @@ namespace Ddd.Lib.Transformations
                 { 1, 0, 0, 0},
                 { 0, 1, 0, 0},
                 { 0, 0, 1, 0},
-                { deltaX, deltaY, -deltaZ, 1}
+                { deltaX, deltaY, deltaZ, 1}
             });
 
             return new Transformation(transformationMatrix);
@@ -147,7 +147,7 @@ namespace Ddd.Lib.Transformations
         {
             var transformationAction = (Action<Point>)(p =>
             {
-                var distance = SysMath.Abs(p.Z) < 0.1 ? 0.1 : p.Z;
+                var distance = SysMath.Abs(p.Z) < 0.1 ? 0.1 : SysMath.Abs(p.Z);
                 p.X = p.X * d / distance;
                 p.Y = p.Y * d / distance;
             });

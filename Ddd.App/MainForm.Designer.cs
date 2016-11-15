@@ -731,7 +731,7 @@
             // 
             // d
             // 
-            this.d.DecimalPlaces = 1;
+            this.d.DecimalPlaces = 3;
             this.d.Increment = new decimal(new int[] {
             5,
             0,
@@ -739,7 +739,7 @@
             65536});
             this.d.Location = new System.Drawing.Point(30, 19);
             this.d.Maximum = new decimal(new int[] {
-            1000,
+            100000000,
             0,
             0,
             0});
@@ -810,7 +810,13 @@
             // 
             // rho
             // 
+            this.rho.DecimalPlaces = 3;
             this.rho.Location = new System.Drawing.Point(154, 19);
+            this.rho.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
             this.rho.Minimum = new decimal(new int[] {
             100,
             0,

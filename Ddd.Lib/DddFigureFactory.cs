@@ -17,7 +17,7 @@ namespace Ddd.Lib
             var yPoint1 = new Point(initialPoint.X, initialPoint.Y, initialPoint.Z);
             var yPoint2 = new Point(initialPoint.X, initialPoint.Y + 200, initialPoint.Z);
             var zPoint1 = new Point(initialPoint.X, initialPoint.Y, initialPoint.Z);
-            var zPoint2 = new Point(initialPoint.X, initialPoint.Y, initialPoint.Z - 200);
+            var zPoint2 = new Point(initialPoint.X, initialPoint.Y, initialPoint.Z + 200);
             var xLine = new Line(xPoint1, xPoint2);
             var yLine = new Line(yPoint1, yPoint2);
             var zLine = new Line(zPoint1, zPoint2);
@@ -48,31 +48,35 @@ namespace Ddd.Lib
             var l2 = new Line(p3, p4);
             var l3 = new Line(p2, p4);
             var l4 = new Line(p1, p3);
-            var l5 = new Line(p1, p5);
-            var l6 = new Line(p2, p6);
+            var l5 = new Line(p5, p1);
+            var l6 = new Line(p6, p2);
             var l7 = new Line(p5, p6);
-            var l8 = new Line(p5, p7);
-            var l9 = new Line(p6, p8);
+            var l8 = new Line(p7, p5);
+            var l9 = new Line(p8, p6);
             var l10 = new Line(p7, p8);
             var l11 = new Line(p3, p7);
             var l12 = new Line(p4, p8);
-            var f1 = new Face(l1, l4, l2, l3);
-            var f2 = new Face(l1, l5, l7, l6);
-            var f3 = new Face(l7, l8, l10, l9);
-            var f4 = new Face(l10, l11, l2, l12);
-            var f5 = new Face(l6, l9, l12, l3);
-            var f6 = new Face(l5, l8, l11, l4);
+            var f1 = new Face(l1, l2, l3, l4);
+            var f2 = new Face(l7, l1, l6, l5);
+            var f3 = new Face(l10, l7, l9, l8);
+            var f4 = new Face(l2, l10, l12, l11);
+            //var f5 = new Face(l6, l9, l12, l3);
+            var f6 = new Face(l5, l11, l4, l8);
 
             var bottomCircleCenter = new Point(initialPoint.X, initialPoint.Y - height / 2, initialPoint.Z);
             var bottomCirclePoints = bottomCircleCenter.CreateCircleApproximation(r, n);
             var bottomCircleLines = JoinCircleLines(bottomCirclePoints);
-            var bottomCircle = new Face(bottomCircleLines.ElementAt(0), bottomCircleLines.ElementAt(1), bottomCircleLines.ElementAt(2), bottomCircleLines.Skip(3).ToArray());
+            //var bottomCircle = new Face(bottomCircleLines.ElementAt(0), bottomCircleLines.ElementAt(1), bottomCircleLines.ElementAt(2), bottomCircleLines.Skip(3).ToArray());
+
+            var bottomFaceLines = bottomCircleLines.ToList();
+            bottomFaceLines.Add(l4);
+            var bottomFace = new Face(l5, l8, l11, bottomFaceLines.ToArray());
 
             var topConePoint = new Point(initialPoint.X, initialPoint.Y + height / 2, initialPoint.Z);
             var coneLines = ConnectCircleToPoint(bottomCirclePoints, topConePoint);
             var coneFaces = JoinConeFaces(bottomCircleLines, coneLines);
 
-            var figureFaces = new List<Face> { f1, f2, f3, f4, f5, f6, bottomCircle };
+            var figureFaces = new List<Face> { f1, f2, f3, f4, f6, bottomFace };
             figureFaces.AddRange(coneFaces);
 
             return new Figure(figureFaces.ToArray());
