@@ -1,6 +1,7 @@
 ﻿using Ddd.Lib.Objects;
 using System.Collections.Generic;
 using SysMath = System.Math;
+using System;
 
 namespace Ddd.Lib.Math
 {
@@ -9,6 +10,11 @@ namespace Ddd.Lib.Math
         public static double ToRadians(this double degrees)
         {
             return (degrees * SysMath.PI) / 180;
+        }
+
+        public static double ToDegrees(this double radians)
+        {
+            return (radians * 180) / SysMath.PI;
         }
 
         public static IList<Point> CreateCircleApproximation(this Point center, double r, int n)
@@ -26,6 +32,29 @@ namespace Ddd.Lib.Math
             }
 
             return points;
+        }
+
+        public static double AngleBetween(Vector viewPoint, Face face)
+        {
+            var a = face.Normal;
+            var faceCentalPoint = face.CentralPoint;
+            var b = new Point(
+                viewPoint[0] - faceCentalPoint.X,
+                viewPoint[1] - faceCentalPoint.Y,
+                viewPoint[2] - faceCentalPoint.Z);
+            return SysMath.Acos(Cos(a, b)).ToDegrees();
+        }
+
+        public static double Cos(Vector v1, Vector v2)
+        {
+            var ab = v1[0] * v2[0] + v1[1] * v2[1] + v1[2] * v2[2];
+
+            if (ab == 0)
+            {
+                return 0;
+            }
+
+            return ab / (v1.Length * v2.Length);
         }
     }
 }

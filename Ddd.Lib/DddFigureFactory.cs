@@ -36,14 +36,14 @@ namespace Ddd.Lib
         /// <returns></returns>
         public static Figure Create(Point initialPoint, double length, double width, double height, double r, int n)
         {
-            var p1 = new Point(initialPoint.X + length / 2, initialPoint.Y - height / 2, initialPoint.Z - width / 2);
-            var p2 = new Point(initialPoint.X + length / 2, initialPoint.Y + height / 2, initialPoint.Z - width / 2);
-            var p3 = new Point(initialPoint.X + length / 2, initialPoint.Y - height / 2, initialPoint.Z + width / 2);
-            var p4 = new Point(initialPoint.X + length / 2, initialPoint.Y + height / 2, initialPoint.Z + width / 2);
-            var p5 = new Point(initialPoint.X - length / 2, initialPoint.Y - height / 2, initialPoint.Z - width / 2);
-            var p6 = new Point(initialPoint.X - length / 2, initialPoint.Y + height / 2, initialPoint.Z - width / 2);
-            var p7 = new Point(initialPoint.X - length / 2, initialPoint.Y - height / 2, initialPoint.Z + width / 2);
-            var p8 = new Point(initialPoint.X - length / 2, initialPoint.Y + height / 2, initialPoint.Z + width / 2);
+            var p1 = new Point(initialPoint.X + length / 2, initialPoint.Y + height / 2, initialPoint.Z - width / 2);
+            var p2 = new Point(initialPoint.X + length / 2, initialPoint.Y - height / 2, initialPoint.Z - width / 2);
+            var p3 = new Point(initialPoint.X + length / 2, initialPoint.Y + height / 2, initialPoint.Z + width / 2);
+            var p4 = new Point(initialPoint.X + length / 2, initialPoint.Y - height / 2, initialPoint.Z + width / 2);
+            var p5 = new Point(initialPoint.X - length / 2, initialPoint.Y + height / 2, initialPoint.Z - width / 2);
+            var p6 = new Point(initialPoint.X - length / 2, initialPoint.Y - height / 2, initialPoint.Z - width / 2);
+            var p7 = new Point(initialPoint.X - length / 2, initialPoint.Y + height / 2, initialPoint.Z + width / 2);
+            var p8 = new Point(initialPoint.X - length / 2, initialPoint.Y - height / 2, initialPoint.Z + width / 2);
             var l1 = new Line(p1, p2);
             var l2 = new Line(p3, p4);
             var l3 = new Line(p2, p4);
@@ -60,17 +60,15 @@ namespace Ddd.Lib
             var f2 = new Face(l7, l1, l6, l5);
             var f3 = new Face(l10, l7, l9, l8);
             var f4 = new Face(l2, l10, l12, l11);
-            //var f5 = new Face(l6, l9, l12, l3);
             var f6 = new Face(l5, l11, l4, l8);
 
             var bottomCircleCenter = new Point(initialPoint.X, initialPoint.Y - height / 2, initialPoint.Z);
             var bottomCirclePoints = bottomCircleCenter.CreateCircleApproximation(r, n);
             var bottomCircleLines = JoinCircleLines(bottomCirclePoints);
-            //var bottomCircle = new Face(bottomCircleLines.ElementAt(0), bottomCircleLines.ElementAt(1), bottomCircleLines.ElementAt(2), bottomCircleLines.Skip(3).ToArray());
 
             var bottomFaceLines = bottomCircleLines.ToList();
-            bottomFaceLines.Add(l4);
-            var bottomFace = new Face(l5, l8, l11, bottomFaceLines.ToArray());
+            bottomFaceLines.Add(l3);
+            var bottomFace = new Face(l6, l12, l9, bottomFaceLines.ToArray());
 
             var topConePoint = new Point(initialPoint.X, initialPoint.Y + height / 2, initialPoint.Z);
             var coneLines = ConnectCircleToPoint(bottomCirclePoints, topConePoint);

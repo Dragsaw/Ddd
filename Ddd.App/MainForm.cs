@@ -39,7 +39,8 @@ namespace Ddd.App
         public void DrawFigure(DddObjects.Figure figure, Color? color = null)
         {
             color = color ?? Color.Red;
-            foreach (var line in figure.Faces.SelectMany(f => f.Lines).Distinct())
+            var viewPoint = new DddObjects.Point(0, 0, -1000);
+            foreach (var line in figure.Faces.Where(f => f.IsVisible(viewPoint)).SelectMany(f => f.Lines).Distinct())
             {
                 var point1 = currentPlane.ConvertToSquareCoordinates(line.Points[0]);
                 var point2 = currentPlane.ConvertToSquareCoordinates(line.Points[1]);

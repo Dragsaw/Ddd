@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using SysMath = System.Math;
 
 namespace Ddd.Lib.Objects
 {
@@ -65,6 +66,24 @@ namespace Ddd.Lib.Objects
                     lines[1].First(),
                     lines[2].First()
                 };
+            }
+        }
+
+        public bool IsVisible(Point viewPoint)
+        {
+            var angle = SysMath.Abs(MathExtensions.AngleBetween(viewPoint, this));
+            return angle <= 90;
+        }
+
+        public Point CentralPoint
+        {
+            get
+            {
+                var points = FacePoints;
+                var xAvg = points.Average(p => p.X);
+                var yAvg = points.Average(p => p.Y);
+                var zAvg = points.Average(p => p.Z);
+                return new Point(xAvg, yAvg, zAvg);
             }
         }
     }

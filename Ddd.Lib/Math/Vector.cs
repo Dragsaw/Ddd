@@ -16,5 +16,14 @@
             get { return Rows[0, index]; }
             set { Rows[0, index] = value; }
         }
+
+        public double Length
+        {
+            get
+            {
+                var sqSum = this[0] * this[0] + this[1] * this[1] + this[2] * this[2];
+                return System.Math.Sqrt(sqSum);
+            }
+        }
     }
 }
