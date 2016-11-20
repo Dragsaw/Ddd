@@ -60,24 +60,40 @@ namespace Ddd.Lib
             var f2 = new Face(l7, l1, l6, l5);
             var f3 = new Face(l10, l7, l9, l8);
             var f4 = new Face(l2, l10, l12, l11);
-            var f6 = new Face(l5, l11, l4, l8);
+
+            var l8Top = new Line(p5, p7);
+            var l11Top = new Line(p7, p3);
+            var f6 = new Face(l5, l11Top, l4, l8Top);
 
             var bottomCircleCenter = new Point(initialPoint.X, initialPoint.Y - height / 2, initialPoint.Z);
             var bottomCirclePoints = bottomCircleCenter.CreateCircleApproximation(r, n);
             var bottomCircleLines = JoinCircleLines(bottomCirclePoints);
 
             var bottomFaceLines = bottomCircleLines.ToList();
-            bottomFaceLines.Add(l3);
-            var bottomFace = new Face(l6, l12, l9, bottomFaceLines.ToArray());
+            var l9Bottom = new Line(p6, p8);
+            var l6Bottom = new Line(p2, p6);
+            bottomFaceLines.Insert(0, l3);
+            bottomFaceLines.Insert(0, l9Bottom);
+            bottomFaceLines.Insert(0, l12);
+            bottomFaceLines.Insert(0, l6Bottom);
+            var bottomFace = new Face(bottomFaceLines);
+
+            var figureFaces = new List<Face> { f1, f2, f3, f4, f6, bottomFace };
+
+            return new Figure(figureFaces.ToArray());
+        }
+
+        public static Figure CreateCone(Point initialPoint, double length, double width, double height, double r, int n)
+        {
+            var bottomCircleCenter = new Point(initialPoint.X, initialPoint.Y - height / 2, initialPoint.Z);
+            var bottomCirclePoints = bottomCircleCenter.CreateCircleApproximation(r, n);
+            var bottomCircleLines = JoinCircleLines(bottomCirclePoints);
 
             var topConePoint = new Point(initialPoint.X, initialPoint.Y + height / 2, initialPoint.Z);
             var coneLines = ConnectCircleToPoint(bottomCirclePoints, topConePoint);
             var coneFaces = JoinConeFaces(bottomCircleLines, coneLines);
 
-            var figureFaces = new List<Face> { f1, f2, f3, f4, f6, bottomFace };
-            figureFaces.AddRange(coneFaces);
-
-            return new Figure(figureFaces.ToArray());
+            return new Figure(coneFaces.ToArray());
         }
 
         private static IEnumerable<Face> JoinConeFaces(IEnumerable<Line> bottomCircleLines, IEnumerable<Line> coneLines)

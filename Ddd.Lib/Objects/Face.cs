@@ -19,6 +19,11 @@ namespace Ddd.Lib.Objects
             Lines = list;
         }
 
+        public Face(IEnumerable<Line> lines)
+        {
+            Lines = lines.ToList();
+        }
+
         public IEnumerable<Line> Lines { get; private set; }
 
         public IEnumerator<Line> GetEnumerator()
@@ -43,7 +48,7 @@ namespace Ddd.Lib.Objects
                 var z = points[0].X * points[1].Y + points[1].X * points[2].Y + points[2].X * points[0].Y
                     - points[1].X * points[0].Y - points[2].X * points[1].Y - points[0].X * points[2].Y;
 
-                return new Vector(x, y, z);
+                return new Vector(-x, -y, -z);
             }
         }
 
@@ -71,7 +76,7 @@ namespace Ddd.Lib.Objects
 
         public bool IsVisible(Point viewPoint)
         {
-            var angle = SysMath.Abs(MathExtensions.AngleBetween(viewPoint, this));
+            var angle = MathExtensions.AngleBetween(viewPoint, this);
             return angle <= 90;
         }
 

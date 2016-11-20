@@ -13,6 +13,7 @@ namespace Ddd.App
         DddObjects.Plane currentPlane;
         Graphics graphics;
         DddObjects.Figure figure;
+        DddObjects.Figure cone;
         DddObjects.Figure coordinates;
 
         private DddObjects.Point DefaultPoint { get { return new DddObjects.Point(canvas.Width / 2, canvas.Height / 2, 0); } }
@@ -36,15 +37,34 @@ namespace Ddd.App
             canvas.Refresh();
         }
 
+        public void DrawFigure(object sender, TransformationCompletedEventArgs e)
+        {
+            var figure = sender as DddObjects.Figure;
+            DrawFigure(figure);
+            canvas.Refresh();
+        }
+
         public void DrawFigure(DddObjects.Figure figure, Color? color = null)
         {
             color = color ?? Color.Red;
-            var viewPoint = new DddObjects.Point(0, 0, -1000);
-            foreach (var line in figure.Faces.Where(f => f.IsVisible(viewPoint)).SelectMany(f => f.Lines).Distinct())
+            var viewPoint = new DddObjects.Point(0, 0, 5000);
+            foreach (var face in figure.Faces.Where(f => f.IsVisible(viewPoint)))
             {
-                var point1 = currentPlane.ConvertToSquareCoordinates(line.Points[0]);
-                var point2 = currentPlane.ConvertToSquareCoordinates(line.Points[1]);
-                graphics.DrawLine(new Pen(color.Value), point1, point2);
+                var points = face.SelectMany(l => l.Points)
+                    .Distinct()
+                    .Select(currentPlane.ConvertToSquareCoordinates)
+                    .ToArray();
+                var t = points[0];
+                points[0] = points[1];
+                points[1] = t;
+                graphics.FillPolygon(Brushes.AliceBlue, points);
+
+                foreach (var line in face.Distinct())
+                {
+                    var point1 = currentPlane.ConvertToSquareCoordinates(line.Points[0]);
+                    var point2 = currentPlane.ConvertToSquareCoordinates(line.Points[1]);
+                    graphics.DrawLine(new Pen(color.Value), point1, point2);
+                }
             }
         }
 
@@ -57,9 +77,12 @@ namespace Ddd.App
             var r = (int)radius.Value;
             var n = (int)interpolationN.Value;
             figure = DddFigureFactory.Create(new DddObjects.Point(0, 0, 0), l, w, h, r, n);
-            figure.OnTransformationCompleted += RedrawFigure;
+            cone = DddFigureFactory.CreateCone(new DddObjects.Point(0, 0, 0), l, w, h, r, n);
+            figure.OnTransformationCompleted += DrawFigure;
+            cone.OnTransformationCompleted += RedrawFigure;
             coordinates = DddFigureFactory.CreateCoordinates(new DddObjects.Point(0, 0, 0));
-            RedrawFigure(figure, null);
+            RedrawFigure(cone, null);
+            DrawFigure((object)figure, null);
         }
 
         private void Rotate(object sender, System.EventArgs e)
@@ -70,6 +93,7 @@ namespace Ddd.App
                 (double)angleY.Value,
                 (double)angleZ.Value);
             coordinates.ApplyTransformation(rotateTransformation);
+            cone.ApplyTransformation(rotateTransformation);
             figure.ApplyTransformation(rotateTransformation);
         }
 
@@ -79,7 +103,8 @@ namespace Ddd.App
             var moveTransformation = TransformationsFactory.CreateMoveTransformation(
                 (double)moveX.Value,
                 (double)moveY.Value,
-                (double)-moveZ.Value);
+                (double)moveZ.Value);
+            cone.ApplyTransformation(moveTransformation);
             figure.ApplyTransformation(moveTransformation);
         }
 
@@ -90,6 +115,7 @@ namespace Ddd.App
                 (double)scaleX.Value,
                 (double)scaleY.Value,
                 (double)scaleZ.Value);
+            cone.ApplyTransformation(scaleTransformation);
             figure.ApplyTransformation(scaleTransformation);
         }
 
@@ -100,6 +126,7 @@ namespace Ddd.App
                 (double)anglePsi.Value,
                 (double)angleFi.Value);
             coordinates.ApplyTransformation(axonometricTransformation);
+            cone.ApplyTransformation(axonometricTransformation);
             figure.ApplyTransformation(axonometricTransformation);
         }
 
@@ -108,6 +135,7 @@ namespace Ddd.App
             currentPlane = PlaneFactory.CreateZY(DefaultPoint);
             var profileTransofrmation = TransformationsFactory.CreateProfileProjection();
             coordinates.ApplyTransformation(profileTransofrmation);
+            cone.ApplyTransformation(profileTransofrmation);
             figure.ApplyTransformation(profileTransofrmation);
         }
 
@@ -116,6 +144,7 @@ namespace Ddd.App
             currentPlane = PlaneFactory.CreateXZ(DefaultPoint);
             var horizontalTransofrmation = TransformationsFactory.CreateHorizontalProjection();
             coordinates.ApplyTransformation(horizontalTransofrmation);
+            cone.ApplyTransformation(horizontalTransofrmation);
             figure.ApplyTransformation(horizontalTransofrmation);
         }
 
@@ -124,6 +153,7 @@ namespace Ddd.App
             currentPlane = PlaneFactory.CreateXY(DefaultPoint);
             var frontalTransofrmation = TransformationsFactory.CreateFrontalProjection();
             coordinates.ApplyTransformation(frontalTransofrmation);
+            cone.ApplyTransformation(frontalTransofrmation);
             figure.ApplyTransformation(frontalTransofrmation);
         }
 
@@ -134,6 +164,7 @@ namespace Ddd.App
                 (double)angleAlpha.Value,
                 (double)lengthOblique.Value);
             coordinates.ApplyTransformation(obliqueTransofrmation);
+            cone.ApplyTransformation(obliqueTransofrmation);
             figure.ApplyTransformation(obliqueTransofrmation);
         }
 
@@ -145,9 +176,11 @@ namespace Ddd.App
                 (double)angleTheta.Value,
                 (double)rho.Value);
             coordinates.ApplyTransformation(viewTransformation);
+            cone.ApplyTransformation(viewTransformation);
             figure.ApplyTransformation(viewTransformation);
             var perspectiveProjection = TransformationsFactory.CreatePerspectiveProjection((double)d.Value);
             coordinates.ApplyTransformation(perspectiveProjection);
+            cone.ApplyTransformation(perspectiveProjection);
             figure.ApplyTransformation(perspectiveProjection);
         }
 
@@ -156,6 +189,7 @@ namespace Ddd.App
             currentPlane = PlaneFactory.CreateXY(DefaultPoint);
             var perspectiveProjection = TransformationsFactory.CreatePerspectiveProjection((double)d.Value);
             coordinates.ApplyTransformation(perspectiveProjection);
+            cone.ApplyTransformation(perspectiveProjection);
             figure.ApplyTransformation(perspectiveProjection);
         }
     }
