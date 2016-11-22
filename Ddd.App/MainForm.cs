@@ -15,6 +15,7 @@ namespace Ddd.App
         DddObjects.Figure figure;
         DddObjects.Figure cone;
         DddObjects.Figure coordinates;
+        DddObjects.Point lightPoint = new DddObjects.Point(500, 0, 5000);
 
         private DddObjects.Point DefaultPoint { get { return new DddObjects.Point(canvas.Width / 2, canvas.Height / 2, 0); } }
 
@@ -53,7 +54,9 @@ namespace Ddd.App
                     .Select(currentPlane.ConvertToSquareCoordinates)
                     .ToArray();
 
-                graphics.FillPolygon(Brushes.AliceBlue, points);
+                var brightness = face.GetBrightness(lightPoint);
+                var brush = new SolidBrush(Color.FromArgb(brightness, 0, 0));
+                graphics.FillPolygon(brush, points);
 
                 foreach (var line in face.Distinct())
                 {
@@ -173,7 +176,6 @@ namespace Ddd.App
 
         private void ViewViewTransformationProjection(object sender, System.EventArgs e)
         {
-            currentPlane = PlaneFactory.CreateXY(DefaultPoint);
             var viewTransformation = TransformationsFactory.CreateViewTransformation(
                 (double)anglePhiView.Value,
                 (double)angleTheta.Value,
@@ -189,7 +191,6 @@ namespace Ddd.App
 
         private void ViewPerspectiveProjection(object sender, System.EventArgs e)
         {
-            currentPlane = PlaneFactory.CreateXY(DefaultPoint);
             var perspectiveProjection = TransformationsFactory.CreatePerspectiveProjection((double)d.Value);
             coordinates.ApplyTransformation(perspectiveProjection);
             cone.ApplyTransformation(perspectiveProjection);

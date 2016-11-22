@@ -818,7 +818,7 @@
             0,
             0});
             this.rho.Minimum = new decimal(new int[] {
-            100,
+            10000,
             0,
             0,
             -2147483648});

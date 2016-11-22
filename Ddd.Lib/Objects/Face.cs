@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace Ddd.Lib.Objects
 {
@@ -73,6 +74,12 @@ namespace Ddd.Lib.Objects
                     lines[2].First()
                 };
             }
+        }
+
+        public int GetBrightness(Point lightPoint)
+        {
+            var angleCos = System.Math.Abs(MathExtensions.Cos(lightPoint, Normal));
+            return (int)(250 * angleCos);
         }
 
         public bool IsVisible(Point viewPoint)
