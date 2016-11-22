@@ -81,7 +81,7 @@ namespace Ddd.Lib.Transformations
         public static Transformation CreateProfileProjection()
         {
             var transformationMatrix = new Matrix(new double[,] {
-                { 0, 0, 0, 0},
+                { 1, 0, 0, 0},
                 { 0, 1, 0, 0},
                 { 0, 0, 1, 0},
                 { 0, 0, 0, 1 }
@@ -93,8 +93,8 @@ namespace Ddd.Lib.Transformations
         public static Transformation CreateHorizontalProjection()
         {
             var transformationMatrix = new Matrix(new double[,] {
-                { 1, 0, 0, 0},
-                { 0, 0, 0, 0},
+                { -1, 0, 0, 0},
+                { 0, 1, 0, 0},
                 { 0, 0, 1, 0},
                 { 0, 0, 0, 1 }
             });
@@ -107,7 +107,7 @@ namespace Ddd.Lib.Transformations
             var transformationMatrix = new Matrix(new double[,] {
                 { 1, 0, 0, 0},
                 { 0, 1, 0, 0},
-                { 0, 0, 0, 0},
+                { 0, 0, 1, 0},
                 { 0, 0, 0, 1 }
             });
 

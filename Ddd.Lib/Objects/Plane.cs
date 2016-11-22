@@ -7,6 +7,8 @@ namespace Ddd.Lib.Objects
         private Func<Point, double> _xCoordinate;
         private Func<Point, double> _yCoordinate;
 
+        public Point ViewPoint { get; set; }
+
         public Plane(Func<Point, double> xCoordinate, Func<Point, double> yCoordinate)
         {
             _xCoordinate = xCoordinate;

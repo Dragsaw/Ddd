@@ -1,7 +1,6 @@
 ﻿using Ddd.Lib.Objects;
 using System.Collections.Generic;
 using SysMath = System.Math;
-using System;
 
 namespace Ddd.Lib.Math
 {

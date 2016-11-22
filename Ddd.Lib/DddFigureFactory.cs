@@ -69,14 +69,18 @@ namespace Ddd.Lib
             var bottomCirclePoints = bottomCircleCenter.CreateCircleApproximation(r, n);
             var bottomCircleLines = JoinCircleLines(bottomCirclePoints);
 
-            var bottomFaceLines = bottomCircleLines.ToList();
             var l9Bottom = new Line(p6, p8);
             var l6Bottom = new Line(p2, p6);
-            bottomFaceLines.Insert(0, l3);
-            bottomFaceLines.Insert(0, l9Bottom);
-            bottomFaceLines.Insert(0, l12);
-            bottomFaceLines.Insert(0, l6Bottom);
-            var bottomFace = new Face(bottomFaceLines);
+            var bottomFaceLines = new List<Line> { l6Bottom, l12, l9Bottom, l3 };
+            var bottomFaceFillPoints = bottomFaceLines.SelectMany(l => l.Points).Distinct().ToList();
+            var t = bottomFaceFillPoints[0];
+            bottomFaceFillPoints[0] = bottomFaceFillPoints[1];
+            bottomFaceFillPoints[1] = t;
+            bottomFaceFillPoints.Add(bottomFaceFillPoints[0]);
+
+            bottomFaceLines.AddRange(bottomCircleLines);
+            bottomFaceFillPoints.AddRange(bottomCircleLines.SelectMany(l => l.Points));
+            var bottomFace = new Face(bottomFaceLines) { FillPoints = bottomFaceFillPoints };
 
             var figureFaces = new List<Face> { f1, f2, f3, f4, f6, bottomFace };
 

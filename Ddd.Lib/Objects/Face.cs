@@ -2,12 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using SysMath = System.Math;
 
 namespace Ddd.Lib.Objects
 {
     public class Face : IEnumerable<Line>
     {
+        private IEnumerable<Point> fillPoints;
+
         public Face(Line l1, Line l2, Line l3, params Line[] lines)
         {
             var list = new List<Line> { l1, l2, l3 };
@@ -89,6 +90,30 @@ namespace Ddd.Lib.Objects
                 var yAvg = points.Average(p => p.Y);
                 var zAvg = points.Average(p => p.Z);
                 return new Point(xAvg, yAvg, zAvg);
+            }
+        }
+
+        public IEnumerable<Point> FillPoints
+        {
+            get
+            {
+                if (fillPoints != null)
+                {
+                    return fillPoints;
+                }
+
+                var points= this.SelectMany(l => l.Points)
+                    .Distinct()
+                    .ToArray();
+                var t = points[0];
+                points[0] = points[1];
+                points[1] = t;
+
+                return fillPoints = points;
+            }
+            set
+            {
+                fillPoints = value;
             }
         }
     }

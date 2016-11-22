@@ -33,7 +33,7 @@ namespace Ddd.App
             graphics = Graphics.FromImage(canvasBitmap);
             var figure = sender as DddObjects.Figure;
             DrawFigure(figure);
-            DrawFigure(coordinates, Color.Blue);
+            DrawCoordinates(coordinates, Color.Blue);
             canvas.Refresh();
         }
 
@@ -47,16 +47,12 @@ namespace Ddd.App
         public void DrawFigure(DddObjects.Figure figure, Color? color = null)
         {
             color = color ?? Color.Red;
-            var viewPoint = new DddObjects.Point(0, 0, 5000);
-            foreach (var face in figure.Faces.Where(f => f.IsVisible(viewPoint)))
+            foreach (var face in figure.Faces.Where(f => f.IsVisible(currentPlane.ViewPoint)))
             {
-                var points = face.SelectMany(l => l.Points)
-                    .Distinct()
+                var points = face.FillPoints
                     .Select(currentPlane.ConvertToSquareCoordinates)
                     .ToArray();
-                var t = points[0];
-                points[0] = points[1];
-                points[1] = t;
+
                 graphics.FillPolygon(Brushes.AliceBlue, points);
 
                 foreach (var line in face.Distinct())
@@ -65,6 +61,16 @@ namespace Ddd.App
                     var point2 = currentPlane.ConvertToSquareCoordinates(line.Points[1]);
                     graphics.DrawLine(new Pen(color.Value), point1, point2);
                 }
+            }
+        }
+
+        public void DrawCoordinates(DddObjects.Figure figure, Color? color = null)
+        {
+            foreach (var line in figure.Faces.SelectMany(f => f.Lines).Distinct())
+            {
+                var point1 = currentPlane.ConvertToSquareCoordinates(line.Points[0]);
+                var point2 = currentPlane.ConvertToSquareCoordinates(line.Points[1]);
+                graphics.DrawLine(new Pen(color.Value), point1, point2);
             }
         }
 
@@ -87,7 +93,6 @@ namespace Ddd.App
 
         private void Rotate(object sender, System.EventArgs e)
         {
-            currentPlane = PlaneFactory.CreateXY(DefaultPoint);
             var rotateTransformation = TransformationsFactory.CreateRotateTransformation(
                 (double)angleX.Value,
                 (double)angleY.Value,
@@ -99,7 +104,6 @@ namespace Ddd.App
 
         private void Shift(object sender, System.EventArgs e)
         {
-            currentPlane = PlaneFactory.CreateXY(DefaultPoint);
             var moveTransformation = TransformationsFactory.CreateMoveTransformation(
                 (double)moveX.Value,
                 (double)moveY.Value,
@@ -110,7 +114,6 @@ namespace Ddd.App
 
         private void Scale(object sender, System.EventArgs e)
         {
-            currentPlane = PlaneFactory.CreateXY(DefaultPoint);
             var scaleTransformation = TransformationsFactory.CreateScaleTransformation(
                 (double)scaleX.Value,
                 (double)scaleY.Value,
