@@ -55,5 +55,17 @@ namespace Ddd.Lib.Math
 
             return ab / (v1.Length * v2.Length);
         }
+
+        public static Point CreatePolarPoint(double phi, double theta, double rho)
+        {
+            phi = phi.ToRadians();
+            theta = theta.ToRadians();
+
+            var xE = rho * SysMath.Sin(phi) * SysMath.Cos(theta);
+            var yE = rho * SysMath.Sin(phi) * SysMath.Sin(theta);
+            var zE = rho * SysMath.Cos(phi);
+
+            return new Point(xE, yE, zE);
+        }
     }
 }

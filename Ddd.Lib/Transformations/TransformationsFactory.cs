@@ -1,13 +1,11 @@
-﻿using System;
-using Ddd.Lib.Math;
+﻿using Ddd.Lib.Math;
 using SysMath = System.Math;
-using Ddd.Lib.Objects;
 
 namespace Ddd.Lib.Transformations
 {
     public static class TransformationsFactory
     {
-        public static Transformation CreateRotateTransformation(double angleX, double angleY, double angleZ)
+        public static ITransformation CreateRotateTransformation(double angleX, double angleY, double angleZ)
         {
             angleX = angleX.ToRadians();
             angleY = angleY.ToRadians();
@@ -36,10 +34,10 @@ namespace Ddd.Lib.Transformations
 
             var transformationMatrix = rotateX * rotateY * rotateZ;
 
-            return new Transformation(transformationMatrix);
+            return new MatrixTransformation(transformationMatrix);
         }
 
-        public static Transformation CreateMoveTransformation(double deltaX, double deltaY, double deltaZ)
+        public static ITransformation CreateMoveTransformation(double deltaX, double deltaY, double deltaZ)
         {
             var transformationMatrix = new Matrix(new[,] {
                 { 1, 0, 0, 0},
@@ -48,10 +46,10 @@ namespace Ddd.Lib.Transformations
                 { deltaX, deltaY, deltaZ, 1}
             });
 
-            return new Transformation(transformationMatrix);
+            return new MatrixTransformation(transformationMatrix);
         }
 
-        public static Transformation CreateScaleTransformation(double scaleX, double scaleY, double scaleZ)
+        public static ITransformation CreateScaleTransformation(double scaleX, double scaleY, double scaleZ)
         {
             var transformationMatrix = new Matrix(new[,] {
                 {scaleX, 0, 0, 0},
@@ -60,75 +58,10 @@ namespace Ddd.Lib.Transformations
                 {0, 0, 0, 1 }
             });
 
-            return new Transformation(transformationMatrix);
+            return new MatrixTransformation(transformationMatrix);
         }
 
-        public static Transformation CreateAxonometricProjection(double psi, double fi)
-        {
-            psi = psi.ToRadians();
-            fi = fi.ToRadians();
-
-            var transformationMatrix = new Matrix(new[,] {
-                { SysMath.Cos(psi), SysMath.Sin(psi) * SysMath.Sin(fi), 0, 0},
-                { 0, SysMath.Cos(fi), 0, 0},
-                { SysMath.Sin(psi), -SysMath.Sin(fi) * SysMath.Cos(psi), 0, 0},
-                { 0, 0, 0, 1 }
-            });
-
-            return new Transformation(transformationMatrix);
-        }
-
-        public static Transformation CreateProfileProjection()
-        {
-            var transformationMatrix = new Matrix(new double[,] {
-                { 1, 0, 0, 0},
-                { 0, 1, 0, 0},
-                { 0, 0, 1, 0},
-                { 0, 0, 0, 1 }
-            });
-
-            return new Transformation(transformationMatrix);
-        }
-
-        public static Transformation CreateHorizontalProjection()
-        {
-            var transformationMatrix = new Matrix(new double[,] {
-                { -1, 0, 0, 0},
-                { 0, 1, 0, 0},
-                { 0, 0, 1, 0},
-                { 0, 0, 0, 1 }
-            });
-
-            return new Transformation(transformationMatrix);
-        }
-
-        public static Transformation CreateFrontalProjection()
-        {
-            var transformationMatrix = new Matrix(new double[,] {
-                { 1, 0, 0, 0},
-                { 0, 1, 0, 0},
-                { 0, 0, 1, 0},
-                { 0, 0, 0, 1 }
-            });
-
-            return new Transformation(transformationMatrix);
-        }
-
-        public static Transformation CreateObliqueProjection(double alpha, double length)
-        {
-            alpha = alpha.ToRadians();
-
-            var transformationMatrix = new Matrix(new double[,] {
-                { 1, 0, 0, 0},
-                { 0, 1, 0, 0},
-                { length * SysMath.Cos(alpha), length * SysMath.Sin(alpha), 0, 0},
-                { 0, 0, 0, 1 }
-            });
-
-            return new Transformation(transformationMatrix);
-        }
-
-        public static Transformation CreateViewTransformation(double phi, double theta, double rho)
+        public static ITransformation CreateViewTransformation(double phi, double theta, double rho)
         {
             phi = phi.ToRadians();
             theta = theta.ToRadians();
@@ -140,19 +73,7 @@ namespace Ddd.Lib.Transformations
                 { 0, 0, rho, 1 }
             });
 
-            return new Transformation(transformationMatrix);
-        }
-
-        public static Action<Point> CreatePerspectiveProjection(double d)
-        {
-            var transformationAction = (Action<Point>)(p =>
-            {
-                var distance = SysMath.Abs(p.Z) < 0.1 ? 0.1 : SysMath.Abs(p.Z);
-                p.X = p.X * d / distance;
-                p.Y = p.Y * d / distance;
-            });
-
-            return transformationAction;
+            return new MatrixTransformation(transformationMatrix);
         }
     }
 }

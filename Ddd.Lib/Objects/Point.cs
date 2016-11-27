@@ -8,6 +8,10 @@ namespace Ddd.Lib.Objects
         {
         }
 
+        public Point(MatrixBase matrixBase) : base(matrixBase.Rows[0, 0], matrixBase.Rows[0, 1], matrixBase.Rows[0, 2], 1)
+        {
+        }
+
         public double X
         {
             get { return this[0]; }

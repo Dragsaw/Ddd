@@ -4,197 +4,183 @@ using Ddd.Lib.Transformations;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using System;
+using Ddd.Lib.Math;
+using System.Collections.Generic;
 
 namespace Ddd.App
 {
     public partial class MainForm : Form
     {
-        Bitmap canvasBitmap;
-        DddObjects.Plane currentPlane;
-        Graphics graphics;
-        DddObjects.Figure figure;
-        DddObjects.Figure cone;
-        DddObjects.Figure coordinates;
-        DddObjects.Point lightPoint = new DddObjects.Point(500, 0, 5000);
+        private Bitmap canvasBitmap;
+        private Graphics graphics;
+        private DddObjects.Plane currentPlane;
+        private ITransformation projection;
+        private List<DddObjects.Figure> figures = new List<DddObjects.Figure>();
+        private DddObjects.Point lightPoint = new DddObjects.Point(0, 0, 1000);
 
         private DddObjects.Point DefaultPoint { get { return new DddObjects.Point(canvas.Width / 2, canvas.Height / 2, 0); } }
 
         public MainForm()
         {
             InitializeComponent();
-            canvasBitmap = new Bitmap(canvas.Width, canvas.Height);
-            canvas.Image = canvasBitmap;
-            graphics = Graphics.FromImage(canvasBitmap);
+            UpdateGraphics();
         }
 
-        public void RedrawFigure(object sender, TransformationCompletedEventArgs e)
+        public void RedrawFigures()
         {
-            canvasBitmap = new Bitmap(canvas.Width, canvas.Height);
-            canvas.Image = canvasBitmap;
-            graphics = Graphics.FromImage(canvasBitmap);
-            var figure = sender as DddObjects.Figure;
-            DrawFigure(figure);
-            DrawCoordinates(coordinates, Color.Blue);
-            canvas.Refresh();
+            UpdateGraphics();
+            figures.ForEach(DrawFigure);
         }
 
-        public void DrawFigure(object sender, TransformationCompletedEventArgs e)
+        public void DrawFigure(DddObjects.Figure figure)
         {
-            var figure = sender as DddObjects.Figure;
-            DrawFigure(figure);
-            canvas.Refresh();
-        }
+            var pen = new Pen(Color.Red);
 
-        public void DrawFigure(DddObjects.Figure figure, Color? color = null)
-        {
-            color = color ?? Color.Red;
-            foreach (var face in figure.Faces.Where(f => f.IsVisible(currentPlane.ViewPoint)))
+            foreach (var face in figure)
+            {
+                face.SetBrightness(lightPoint);
+                face.SetVisibility(currentPlane.ViewPoint);
+            }
+
+            foreach (var face in figure.Faces
+                .Where(f => f.Visible)
+                .OrderByDescending(f => f.CentralPoint.Z)
+                .ThenBy(f => f.CentralPoint.X)
+                .ThenByDescending(f => f.CentralPoint.Y))
             {
                 var points = face.FillPoints
+                    .Select(p => projection.Project(p))
                     .Select(currentPlane.ConvertToSquareCoordinates)
                     .ToArray();
 
-                var brightness = face.GetBrightness(lightPoint);
-                var brush = new SolidBrush(Color.FromArgb(brightness, 0, 0));
+                var brush = new SolidBrush(Color.FromArgb(0, face.Brightness, 0));
                 graphics.FillPolygon(brush, points);
 
                 foreach (var line in face.Distinct())
                 {
-                    var point1 = currentPlane.ConvertToSquareCoordinates(line.Points[0]);
-                    var point2 = currentPlane.ConvertToSquareCoordinates(line.Points[1]);
-                    graphics.DrawLine(new Pen(color.Value), point1, point2);
+                    var point1 = currentPlane.ConvertToSquareCoordinates(projection.Project(line.Points[0]));
+                    var point2 = currentPlane.ConvertToSquareCoordinates(projection.Project(line.Points[1]));
+                    graphics.DrawLine(pen, point1, point2);
                 }
             }
         }
 
-        public void DrawCoordinates(DddObjects.Figure figure, Color? color = null)
+        private void UpdateGraphics()
         {
-            foreach (var line in figure.Faces.SelectMany(f => f.Lines).Distinct())
-            {
-                var point1 = currentPlane.ConvertToSquareCoordinates(line.Points[0]);
-                var point2 = currentPlane.ConvertToSquareCoordinates(line.Points[1]);
-                graphics.DrawLine(new Pen(color.Value), point1, point2);
-            }
+            canvasBitmap = new Bitmap(canvas.Width, canvas.Height);
+            canvas.Image = canvasBitmap;
+            graphics = Graphics.FromImage(canvasBitmap);
         }
 
-        private void Create(object sender, System.EventArgs e)
+        private void Create(object sender, EventArgs e)
         {
+            DddObjects.Point lightPoint = new DddObjects.Point(0, 0, 5000);
             currentPlane = PlaneFactory.CreateXY(DefaultPoint);
             var l = (int)length.Value;
             var w = (int)width.Value;
             var h = (int)height.Value;
             var r = (int)radius.Value;
             var n = (int)interpolationN.Value;
-            figure = DddFigureFactory.Create(new DddObjects.Point(0, 0, 0), l, w, h, r, n);
-            cone = DddFigureFactory.CreateCone(new DddObjects.Point(0, 0, 0), l, w, h, r, n);
-            figure.OnTransformationCompleted += DrawFigure;
-            cone.OnTransformationCompleted += RedrawFigure;
-            coordinates = DddFigureFactory.CreateCoordinates(new DddObjects.Point(0, 0, 0));
-            RedrawFigure(cone, null);
-            DrawFigure((object)figure, null);
+            var figure = DddFigureFactory.Create(new DddObjects.Point(0, 0, 0), l, w, h, r, n);
+            var cone = DddFigureFactory.CreateCone(new DddObjects.Point(0, 0, 0), l, w, h, r, n);
+            projection = ProjectionsFactory.CreateFrontalProjection();
+
+            figures = new List<DddObjects.Figure> { cone, figure };
+            RedrawFigures();
         }
 
-        private void Rotate(object sender, System.EventArgs e)
+        private void ApplyTransformation(ITransformation transformation)
+        {
+            figures.ForEach(f => f.ApplyTransformation(transformation));
+            RedrawFigures();
+        }
+
+        private void Rotate(object sender, EventArgs e)
         {
             var rotateTransformation = TransformationsFactory.CreateRotateTransformation(
                 (double)angleX.Value,
                 (double)angleY.Value,
                 (double)angleZ.Value);
-            coordinates.ApplyTransformation(rotateTransformation);
-            cone.ApplyTransformation(rotateTransformation);
-            figure.ApplyTransformation(rotateTransformation);
+            ApplyTransformation(rotateTransformation);
         }
 
-        private void Shift(object sender, System.EventArgs e)
+        private void Shift(object sender, EventArgs e)
         {
             var moveTransformation = TransformationsFactory.CreateMoveTransformation(
                 (double)moveX.Value,
                 (double)moveY.Value,
                 (double)moveZ.Value);
-            cone.ApplyTransformation(moveTransformation);
-            figure.ApplyTransformation(moveTransformation);
+            ApplyTransformation(moveTransformation);
         }
 
-        private void Scale(object sender, System.EventArgs e)
+        private void Scale(object sender, EventArgs e)
         {
             var scaleTransformation = TransformationsFactory.CreateScaleTransformation(
                 (double)scaleX.Value,
                 (double)scaleY.Value,
                 (double)scaleZ.Value);
-            cone.ApplyTransformation(scaleTransformation);
-            figure.ApplyTransformation(scaleTransformation);
+            ApplyTransformation(scaleTransformation);
         }
 
-        private void ViewAxonometricProjection(object sender, System.EventArgs e)
+        private void ViewAxonometricProjection(object sender, EventArgs e)
         {
             currentPlane = PlaneFactory.CreateXY(DefaultPoint);
-            var axonometricTransformation = TransformationsFactory.CreateAxonometricProjection(
+            projection = ProjectionsFactory.CreateAxonometricProjection(
                 (double)anglePsi.Value,
-                (double)angleFi.Value);
-            coordinates.ApplyTransformation(axonometricTransformation);
-            cone.ApplyTransformation(axonometricTransformation);
-            figure.ApplyTransformation(axonometricTransformation);
+                (double)-angleFi.Value);
+            RedrawFigures();
         }
 
-        private void ViewProfileProjection(object sender, System.EventArgs e)
+        private void ViewProfileProjection(object sender, EventArgs e)
         {
             currentPlane = PlaneFactory.CreateZY(DefaultPoint);
-            var profileTransofrmation = TransformationsFactory.CreateProfileProjection();
-            coordinates.ApplyTransformation(profileTransofrmation);
-            cone.ApplyTransformation(profileTransofrmation);
-            figure.ApplyTransformation(profileTransofrmation);
+            projection = ProjectionsFactory.CreateProfileProjection();
+            RedrawFigures();
         }
 
-        private void ViewHorizontalProjection(object sender, System.EventArgs e)
+        private void ViewHorizontalProjection(object sender, EventArgs e)
         {
             currentPlane = PlaneFactory.CreateXZ(DefaultPoint);
-            var horizontalTransofrmation = TransformationsFactory.CreateHorizontalProjection();
-            coordinates.ApplyTransformation(horizontalTransofrmation);
-            cone.ApplyTransformation(horizontalTransofrmation);
-            figure.ApplyTransformation(horizontalTransofrmation);
+            projection = ProjectionsFactory.CreateHorizontalProjection();
+            RedrawFigures();
         }
 
-        private void ViewFrontalProjection(object sender, System.EventArgs e)
+        private void ViewFrontalProjection(object sender, EventArgs e)
         {
             currentPlane = PlaneFactory.CreateXY(DefaultPoint);
-            var frontalTransofrmation = TransformationsFactory.CreateFrontalProjection();
-            coordinates.ApplyTransformation(frontalTransofrmation);
-            cone.ApplyTransformation(frontalTransofrmation);
-            figure.ApplyTransformation(frontalTransofrmation);
+            projection = ProjectionsFactory.CreateFrontalProjection();
+            RedrawFigures();
         }
 
-        private void ViewObliqueProjection(object sender, System.EventArgs e)
+        private void ViewObliqueProjection(object sender, EventArgs e)
         {
             currentPlane = PlaneFactory.CreateXY(DefaultPoint);
-            var obliqueTransofrmation = TransformationsFactory.CreateObliqueProjection(
+            projection = ProjectionsFactory.CreateObliqueProjection(
                 (double)angleAlpha.Value,
                 (double)lengthOblique.Value);
-            coordinates.ApplyTransformation(obliqueTransofrmation);
-            cone.ApplyTransformation(obliqueTransofrmation);
-            figure.ApplyTransformation(obliqueTransofrmation);
+            RedrawFigures();
         }
 
-        private void ViewViewTransformationProjection(object sender, System.EventArgs e)
+        private void ViewViewTransformationProjection(object sender, EventArgs e)
         {
+            projection = ProjectionsFactory.CreatePerspectiveProjection((double)d.Value);
+            currentPlane.ViewPoint = MathExtensions.CreatePolarPoint(
+                (double)anglePhiView.Value,
+                (double)angleTheta.Value,
+                (double)rho.Value);
             var viewTransformation = TransformationsFactory.CreateViewTransformation(
                 (double)anglePhiView.Value,
                 (double)angleTheta.Value,
                 (double)rho.Value);
-            coordinates.ApplyTransformation(viewTransformation);
-            cone.ApplyTransformation(viewTransformation);
-            figure.ApplyTransformation(viewTransformation);
-            var perspectiveProjection = TransformationsFactory.CreatePerspectiveProjection((double)d.Value);
-            coordinates.ApplyTransformation(perspectiveProjection);
-            cone.ApplyTransformation(perspectiveProjection);
-            figure.ApplyTransformation(perspectiveProjection);
+            ApplyTransformation(viewTransformation);
+            RedrawFigures();
         }
 
-        private void ViewPerspectiveProjection(object sender, System.EventArgs e)
+        private void ViewPerspectiveProjection(object sender, EventArgs e)
         {
-            var perspectiveProjection = TransformationsFactory.CreatePerspectiveProjection((double)d.Value);
-            coordinates.ApplyTransformation(perspectiveProjection);
-            cone.ApplyTransformation(perspectiveProjection);
-            figure.ApplyTransformation(perspectiveProjection);
+            projection = ProjectionsFactory.CreatePerspectiveProjection((double)d.Value);
+            RedrawFigures();
         }
     }
 }

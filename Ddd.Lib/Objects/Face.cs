@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System;
 
 namespace Ddd.Lib.Objects
 {
@@ -76,10 +75,23 @@ namespace Ddd.Lib.Objects
             }
         }
 
-        public int GetBrightness(Point lightPoint)
+        public void SetBrightness(Point lightPoint)
+        {
+            Brightness = GetBrightness(lightPoint);
+        }
+
+        public bool Visible { get; set; }
+        public byte Brightness { get; set; }
+
+        public void SetVisibility(Point viewPoint)
+        {
+            Visible = IsVisible(viewPoint);
+        }
+
+        public byte GetBrightness(Point lightPoint)
         {
             var angleCos = System.Math.Abs(MathExtensions.Cos(lightPoint, Normal));
-            return (int)(250 * angleCos);
+            return (byte)(250 * angleCos);
         }
 
         public bool IsVisible(Point viewPoint)
@@ -109,7 +121,7 @@ namespace Ddd.Lib.Objects
                     return fillPoints;
                 }
 
-                var points= this.SelectMany(l => l.Points)
+                var points = this.SelectMany(l => l.Points)
                     .Distinct()
                     .ToArray();
                 var t = points[0];

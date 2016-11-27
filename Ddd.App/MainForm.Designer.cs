@@ -743,6 +743,11 @@
             0,
             0,
             0});
+            this.d.Minimum = new decimal(new int[] {
+            100000000,
+            0,
+            0,
+            -2147483648});
             this.d.Name = "d";
             this.d.Size = new System.Drawing.Size(74, 20);
             this.d.TabIndex = 57;
@@ -1003,7 +1008,7 @@
             this.groupBox1.Size = new System.Drawing.Size(235, 72);
             this.groupBox1.TabIndex = 51;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Аксономтрическая";
+            this.groupBox1.Text = "Аксонометрическая";
             // 
             // axonometricButton
             // 

@@ -13,6 +13,11 @@
             Rows = (this * other).Rows;
         }
 
+        public MatrixBase MultiplyBy(MatrixBase other)
+        {
+            return new Matrix((this * other).Rows);
+        }
+
         public static MatrixBase Multiply(MatrixBase m1, MatrixBase m2)
         {
             int h = m1.Height;
