@@ -90,8 +90,9 @@ namespace Ddd.Lib.Objects
 
         public byte GetBrightness(Point lightPoint)
         {
-            var angleCos = System.Math.Abs(MathExtensions.Cos(lightPoint, Normal));
-            return (byte)(250 * angleCos);
+            var vector = MathExtensions.Vectorize(lightPoint, CentralPoint);
+            var angleCos = MathExtensions.Cos(Normal, vector);
+            return angleCos < 0.01 ? (byte)0 : (byte)(250 * angleCos);
         }
 
         public bool IsVisible(Point viewPoint)

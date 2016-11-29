@@ -46,8 +46,8 @@ namespace Ddd.App
             foreach (var face in figure.Faces
                 .Where(f => f.Visible)
                 .OrderByDescending(f => f.CentralPoint.Z)
-                .ThenBy(f => f.CentralPoint.X)
-                .ThenByDescending(f => f.CentralPoint.Y))
+                .ThenBy(f => f.CentralPoint.Y)
+                .ThenBy(f => f.CentralPoint.X))
             {
                 var points = face.FillPoints
                     .Select(p => projection.Project(p))
@@ -165,6 +165,7 @@ namespace Ddd.App
         private void ViewViewTransformationProjection(object sender, EventArgs e)
         {
             projection = ProjectionsFactory.CreatePerspectiveProjection((double)d.Value);
+            currentPlane = PlaneFactory.CreateXY(DefaultPoint);
             currentPlane.ViewPoint = MathExtensions.CreatePolarPoint(
                 (double)anglePhiView.Value,
                 (double)angleTheta.Value,
@@ -174,12 +175,30 @@ namespace Ddd.App
                 (double)angleTheta.Value,
                 (double)rho.Value);
             ApplyTransformation(viewTransformation);
-            RedrawFigures();
         }
 
         private void ViewPerspectiveProjection(object sender, EventArgs e)
         {
             projection = ProjectionsFactory.CreatePerspectiveProjection((double)d.Value);
+            RedrawFigures();
+        }
+
+        private void MoveLight(object sender, EventArgs e)
+        {
+            var moveTransformation = TransformationsFactory.CreateMoveTransformation(
+                (double)moveLightX.Value,
+                (double)moveLightY.Value,
+                (double)moveLightZ.Value);
+            moveTransformation.Transform(lightPoint);
+            RedrawFigures();
+        }
+
+        private void SetLight(object sender, EventArgs e)
+        {
+            var x = (double)setLightX.Value;
+            var y = (double)setLightY.Value;
+            var z = (double)setLightZ.Value;
+            lightPoint = new DddObjects.Point(x, y, z);
             RedrawFigures();
         }
     }

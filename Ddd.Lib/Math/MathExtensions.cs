@@ -36,12 +36,17 @@ namespace Ddd.Lib.Math
         public static double AngleBetween(Vector viewPoint, Face face)
         {
             var a = face.Normal;
-            var faceCentalPoint = face.CentralPoint;
-            var b = new Point(
-                viewPoint[0] - faceCentalPoint.X,
-                viewPoint[1] - faceCentalPoint.Y,
-                viewPoint[2] - faceCentalPoint.Z);
+            var faceCentralPoint = face.CentralPoint;
+            var b = Vectorize(viewPoint, faceCentralPoint);
             return SysMath.Acos(Cos(a, b)).ToDegrees();
+        }
+
+        public static Point Vectorize(Vector point, Vector faceCentralPoint)
+        {
+            return new Point(
+                point[0] - faceCentralPoint[0],
+                point[1] - faceCentralPoint[1],
+                point[2] - faceCentralPoint[2]);
         }
 
         public static double Cos(Vector v1, Vector v2)
