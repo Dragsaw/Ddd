@@ -96,14 +96,6 @@
             this.angleFi = new System.Windows.Forms.NumericUpDown();
             this.label18 = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.moveLightGroup = new System.Windows.Forms.GroupBox();
-            this.moveLightButton = new System.Windows.Forms.Button();
-            this.label23 = new System.Windows.Forms.Label();
-            this.moveLightZ = new System.Windows.Forms.NumericUpDown();
-            this.label24 = new System.Windows.Forms.Label();
-            this.moveLightY = new System.Windows.Forms.NumericUpDown();
-            this.label25 = new System.Windows.Forms.Label();
-            this.moveLightX = new System.Windows.Forms.NumericUpDown();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.button1 = new System.Windows.Forms.Button();
             this.label26 = new System.Windows.Forms.Label();
@@ -112,6 +104,14 @@
             this.setLightY = new System.Windows.Forms.NumericUpDown();
             this.label28 = new System.Windows.Forms.Label();
             this.setLightX = new System.Windows.Forms.NumericUpDown();
+            this.moveLightGroup = new System.Windows.Forms.GroupBox();
+            this.moveLightButton = new System.Windows.Forms.Button();
+            this.label23 = new System.Windows.Forms.Label();
+            this.moveLightZ = new System.Windows.Forms.NumericUpDown();
+            this.label24 = new System.Windows.Forms.Label();
+            this.moveLightY = new System.Windows.Forms.NumericUpDown();
+            this.label25 = new System.Windows.Forms.Label();
+            this.moveLightX = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.canvas)).BeginInit();
             this.rotateGroup.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.angleZ)).BeginInit();
@@ -147,14 +147,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.anglePsi)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.angleFi)).BeginInit();
             this.tabPage3.SuspendLayout();
-            this.moveLightGroup.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.moveLightZ)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.moveLightY)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.moveLightX)).BeginInit();
             this.groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.setLightZ)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.setLightY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.setLightX)).BeginInit();
+            this.moveLightGroup.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.moveLightZ)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.moveLightY)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.moveLightX)).BeginInit();
             this.SuspendLayout();
             // 
             // canvas
@@ -825,11 +825,6 @@
             this.anglePhiView.Name = "anglePhiView";
             this.anglePhiView.Size = new System.Drawing.Size(74, 20);
             this.anglePhiView.TabIndex = 55;
-            this.anglePhiView.Value = new decimal(new int[] {
-            45,
-            0,
-            0,
-            0});
             // 
             // label15
             // 
@@ -888,11 +883,6 @@
             this.angleTheta.Name = "angleTheta";
             this.angleTheta.Size = new System.Drawing.Size(74, 20);
             this.angleTheta.TabIndex = 51;
-            this.angleTheta.Value = new decimal(new int[] {
-            45,
-            0,
-            0,
-            0});
             // 
             // viewTransformButton
             // 
@@ -1126,110 +1116,6 @@
             this.tabPage3.Text = "Освещение";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // moveLightGroup
-            // 
-            this.moveLightGroup.Controls.Add(this.moveLightButton);
-            this.moveLightGroup.Controls.Add(this.label23);
-            this.moveLightGroup.Controls.Add(this.moveLightZ);
-            this.moveLightGroup.Controls.Add(this.label24);
-            this.moveLightGroup.Controls.Add(this.moveLightY);
-            this.moveLightGroup.Controls.Add(this.label25);
-            this.moveLightGroup.Controls.Add(this.moveLightX);
-            this.moveLightGroup.Location = new System.Drawing.Point(6, 6);
-            this.moveLightGroup.Name = "moveLightGroup";
-            this.moveLightGroup.Size = new System.Drawing.Size(235, 74);
-            this.moveLightGroup.TabIndex = 8;
-            this.moveLightGroup.TabStop = false;
-            this.moveLightGroup.Text = "Перемещение";
-            // 
-            // moveLightButton
-            // 
-            this.moveLightButton.Location = new System.Drawing.Point(129, 45);
-            this.moveLightButton.Name = "moveLightButton";
-            this.moveLightButton.Size = new System.Drawing.Size(93, 23);
-            this.moveLightButton.TabIndex = 6;
-            this.moveLightButton.Text = "Переместить";
-            this.moveLightButton.UseVisualStyleBackColor = true;
-            this.moveLightButton.Click += new System.EventHandler(this.MoveLight);
-            // 
-            // label23
-            // 
-            this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(152, 21);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(17, 13);
-            this.label23.TabIndex = 5;
-            this.label23.Text = "Z:";
-            // 
-            // moveLightZ
-            // 
-            this.moveLightZ.Location = new System.Drawing.Point(175, 19);
-            this.moveLightZ.Maximum = new decimal(new int[] {
-            99999,
-            0,
-            0,
-            0});
-            this.moveLightZ.Minimum = new decimal(new int[] {
-            99999,
-            0,
-            0,
-            -2147483648});
-            this.moveLightZ.Name = "moveLightZ";
-            this.moveLightZ.Size = new System.Drawing.Size(47, 20);
-            this.moveLightZ.TabIndex = 4;
-            // 
-            // label24
-            // 
-            this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(76, 21);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(17, 13);
-            this.label24.TabIndex = 3;
-            this.label24.Text = "Y:";
-            // 
-            // moveLightY
-            // 
-            this.moveLightY.Location = new System.Drawing.Point(99, 19);
-            this.moveLightY.Maximum = new decimal(new int[] {
-            99999,
-            0,
-            0,
-            0});
-            this.moveLightY.Minimum = new decimal(new int[] {
-            99999,
-            0,
-            0,
-            -2147483648});
-            this.moveLightY.Name = "moveLightY";
-            this.moveLightY.Size = new System.Drawing.Size(47, 20);
-            this.moveLightY.TabIndex = 2;
-            // 
-            // label25
-            // 
-            this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(3, 21);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(17, 13);
-            this.label25.TabIndex = 1;
-            this.label25.Text = "X:";
-            // 
-            // moveLightX
-            // 
-            this.moveLightX.Location = new System.Drawing.Point(26, 19);
-            this.moveLightX.Maximum = new decimal(new int[] {
-            99999,
-            0,
-            0,
-            0});
-            this.moveLightX.Minimum = new decimal(new int[] {
-            99999,
-            0,
-            0,
-            -2147483648});
-            this.moveLightX.Name = "moveLightX";
-            this.moveLightX.Size = new System.Drawing.Size(47, 20);
-            this.moveLightX.TabIndex = 0;
-            // 
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.button1);
@@ -1334,6 +1220,110 @@
             this.setLightX.Size = new System.Drawing.Size(47, 20);
             this.setLightX.TabIndex = 0;
             // 
+            // moveLightGroup
+            // 
+            this.moveLightGroup.Controls.Add(this.moveLightButton);
+            this.moveLightGroup.Controls.Add(this.label23);
+            this.moveLightGroup.Controls.Add(this.moveLightZ);
+            this.moveLightGroup.Controls.Add(this.label24);
+            this.moveLightGroup.Controls.Add(this.moveLightY);
+            this.moveLightGroup.Controls.Add(this.label25);
+            this.moveLightGroup.Controls.Add(this.moveLightX);
+            this.moveLightGroup.Location = new System.Drawing.Point(6, 6);
+            this.moveLightGroup.Name = "moveLightGroup";
+            this.moveLightGroup.Size = new System.Drawing.Size(235, 74);
+            this.moveLightGroup.TabIndex = 8;
+            this.moveLightGroup.TabStop = false;
+            this.moveLightGroup.Text = "Перемещение";
+            // 
+            // moveLightButton
+            // 
+            this.moveLightButton.Location = new System.Drawing.Point(129, 45);
+            this.moveLightButton.Name = "moveLightButton";
+            this.moveLightButton.Size = new System.Drawing.Size(93, 23);
+            this.moveLightButton.TabIndex = 6;
+            this.moveLightButton.Text = "Переместить";
+            this.moveLightButton.UseVisualStyleBackColor = true;
+            this.moveLightButton.Click += new System.EventHandler(this.MoveLight);
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(152, 21);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(17, 13);
+            this.label23.TabIndex = 5;
+            this.label23.Text = "Z:";
+            // 
+            // moveLightZ
+            // 
+            this.moveLightZ.Location = new System.Drawing.Point(175, 19);
+            this.moveLightZ.Maximum = new decimal(new int[] {
+            99999,
+            0,
+            0,
+            0});
+            this.moveLightZ.Minimum = new decimal(new int[] {
+            99999,
+            0,
+            0,
+            -2147483648});
+            this.moveLightZ.Name = "moveLightZ";
+            this.moveLightZ.Size = new System.Drawing.Size(47, 20);
+            this.moveLightZ.TabIndex = 4;
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(76, 21);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(17, 13);
+            this.label24.TabIndex = 3;
+            this.label24.Text = "Y:";
+            // 
+            // moveLightY
+            // 
+            this.moveLightY.Location = new System.Drawing.Point(99, 19);
+            this.moveLightY.Maximum = new decimal(new int[] {
+            99999,
+            0,
+            0,
+            0});
+            this.moveLightY.Minimum = new decimal(new int[] {
+            99999,
+            0,
+            0,
+            -2147483648});
+            this.moveLightY.Name = "moveLightY";
+            this.moveLightY.Size = new System.Drawing.Size(47, 20);
+            this.moveLightY.TabIndex = 2;
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(3, 21);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(17, 13);
+            this.label25.TabIndex = 1;
+            this.label25.Text = "X:";
+            // 
+            // moveLightX
+            // 
+            this.moveLightX.Location = new System.Drawing.Point(26, 19);
+            this.moveLightX.Maximum = new decimal(new int[] {
+            99999,
+            0,
+            0,
+            0});
+            this.moveLightX.Minimum = new decimal(new int[] {
+            99999,
+            0,
+            0,
+            -2147483648});
+            this.moveLightX.Name = "moveLightX";
+            this.moveLightX.Size = new System.Drawing.Size(47, 20);
+            this.moveLightX.TabIndex = 0;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1386,16 +1376,16 @@
             ((System.ComponentModel.ISupportInitialize)(this.anglePsi)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.angleFi)).EndInit();
             this.tabPage3.ResumeLayout(false);
-            this.moveLightGroup.ResumeLayout(false);
-            this.moveLightGroup.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.moveLightZ)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.moveLightY)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.moveLightX)).EndInit();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.setLightZ)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.setLightY)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.setLightX)).EndInit();
+            this.moveLightGroup.ResumeLayout(false);
+            this.moveLightGroup.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.moveLightZ)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.moveLightY)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.moveLightX)).EndInit();
             this.ResumeLayout(false);
 
         }

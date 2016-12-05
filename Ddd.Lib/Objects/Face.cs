@@ -49,7 +49,7 @@ namespace Ddd.Lib.Objects
                 var z = points[0].X * points[1].Y + points[1].X * points[2].Y + points[2].X * points[0].Y
                     - points[1].X * points[0].Y - points[2].X * points[1].Y - points[0].X * points[2].Y;
 
-                return new Vector(-x, -y, -z);
+                return new Vector(x, y, z);
             }
         }
 
@@ -92,7 +92,7 @@ namespace Ddd.Lib.Objects
         {
             var vector = MathExtensions.Vectorize(lightPoint, CentralPoint);
             var angleCos = MathExtensions.Cos(Normal, vector);
-            return angleCos < 0.01 ? (byte)0 : (byte)(250 * angleCos);
+            return (byte)((angleCos < 0.01 ? (byte)0 : (byte)(200 * angleCos)) + 50);
         }
 
         public bool IsVisible(Point viewPoint)

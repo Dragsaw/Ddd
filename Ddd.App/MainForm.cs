@@ -125,11 +125,12 @@ namespace Ddd.App
 
         private void ViewAxonometricProjection(object sender, EventArgs e)
         {
+            projection = ProjectionsFactory.CreateFrontalProjection();
             currentPlane = PlaneFactory.CreateXY(DefaultPoint);
-            projection = ProjectionsFactory.CreateAxonometricProjection(
+            var transformation = ProjectionsFactory.CreateAxonometricProjection(
                 (double)anglePsi.Value,
                 (double)-angleFi.Value);
-            RedrawFigures();
+            ApplyTransformation(transformation);
         }
 
         private void ViewProfileProjection(object sender, EventArgs e)
@@ -156,10 +157,11 @@ namespace Ddd.App
         private void ViewObliqueProjection(object sender, EventArgs e)
         {
             currentPlane = PlaneFactory.CreateXY(DefaultPoint);
-            projection = ProjectionsFactory.CreateObliqueProjection(
+            projection = ProjectionsFactory.CreateFrontalProjection();
+            var transformation = ProjectionsFactory.CreateObliqueProjection(
                 (double)angleAlpha.Value,
                 (double)lengthOblique.Value);
-            RedrawFigures();
+            ApplyTransformation(transformation);
         }
 
         private void ViewViewTransformationProjection(object sender, EventArgs e)
