@@ -177,8 +177,11 @@ namespace Ddd.App
             var viewTransformation = TransformationsFactory.CreateViewTransformation(
                 (double)anglePhiView.Value,
                 (double)angleTheta.Value,
-                (double)rho.Value);
-            ApplyTransformation(viewTransformation);
+                (double)rho.Value,
+                (double)d.Value);
+            projection = viewTransformation;
+            RedrawFigures();
+            //ApplyTransformation(viewTransformation);
         }
 
         private void ViewPerspectiveProjection(object sender, EventArgs e)

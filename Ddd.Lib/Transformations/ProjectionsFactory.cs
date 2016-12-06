@@ -74,14 +74,15 @@ namespace Ddd.Lib.Transformations
 
         public static ITransformation CreatePerspectiveProjection(double d)
         {
-            var transformationMatrix = new Matrix(new double[,] {
-                { 1, 0, 0, 0 },
-                { 0, 1, 0, 0 },
-                { 0, 0, 1, 1/d },
-                { 0, 0, 0, 0 }
+            var transformationAction = (Func<Point, Point>)(p =>{
+                var z = SysMath.Abs(p.Z) <= 0.1f ? 0.1 : p.Z;
+                var x = p.X * d / p.Z;
+                var y = p.Y * d / p.Z;
+                z = d;
+                return new Point(x, y, z);
             });
 
-            return new MatrixTransformation(transformationMatrix);
+            return new ActionTransformation(transformationAction);
         }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using Ddd.Lib.Math;
+using Ddd.Lib.Objects;
+using System;
 using SysMath = System.Math;
 
 namespace Ddd.Lib.Transformations
@@ -61,7 +63,7 @@ namespace Ddd.Lib.Transformations
             return new MatrixTransformation(transformationMatrix);
         }
 
-        public static ITransformation CreateViewTransformation(double phi, double theta, double rho)
+        public static ITransformation CreateViewTransformation(double phi, double theta, double rho, double d)
         {
             phi = phi.ToRadians();
             theta = theta.ToRadians();
@@ -73,7 +75,17 @@ namespace Ddd.Lib.Transformations
                 { 0, 0, rho, 1 }
             });
 
-            return new MatrixTransformation(transformationMatrix);
+            var action = (Func<Point, Point>)(point =>
+            {
+                var p = new Point(point.MultiplyBy(transformationMatrix));
+                var z = SysMath.Abs(p.Z) <= 0.1f ? 0.1 : p.Z;
+                var x = p.X * d / p.Z;
+                var y = p.Y * d / p.Z;
+                z = d;
+                return new Point(x, y, z);
+            });
+
+            return new ActionTransformation(action);
         }
     }
 }
