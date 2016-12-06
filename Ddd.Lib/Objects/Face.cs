@@ -105,7 +105,7 @@ namespace Ddd.Lib.Objects
         {
             get
             {
-                var points = FacePoints;
+                var points = Lines.SelectMany(l => l.Points).Distinct();
                 var xAvg = points.Average(p => p.X);
                 var yAvg = points.Average(p => p.Y);
                 var zAvg = points.Average(p => p.Z);

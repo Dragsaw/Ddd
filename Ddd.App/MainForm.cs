@@ -30,22 +30,23 @@ namespace Ddd.App
         public void RedrawFigures()
         {
             UpdateGraphics();
-            figures.ForEach(DrawFigure);
+            DrawFigures();
         }
 
-        public void DrawFigure(DddObjects.Figure figure)
+        public void DrawFigures()
         {
             var pen = new Pen(Color.Red);
+            var faces = figures.SelectMany(f => f.Faces);
 
-            foreach (var face in figure)
+            foreach (var face in faces)
             {
                 face.SetBrightness(lightPoint);
                 face.SetVisibility(currentPlane.ViewPoint);
             }
 
-            foreach (var face in figure.Faces
+            foreach (var face in faces
                 .Where(f => f.Visible)
-                .OrderByDescending(f => f.CentralPoint.Z)
+                .OrderBy(f => f.CentralPoint.Z)
                 .ThenBy(f => f.CentralPoint.Y)
                 .ThenBy(f => f.CentralPoint.X))
             {
@@ -167,6 +168,7 @@ namespace Ddd.App
         private void ViewViewTransformationProjection(object sender, EventArgs e)
         {
             projection = ProjectionsFactory.CreatePerspectiveProjection((double)d.Value);
+            //projection = ProjectionsFactory.CreateFrontalProjection();
             currentPlane = PlaneFactory.CreateXY(DefaultPoint);
             currentPlane.ViewPoint = MathExtensions.CreatePolarPoint(
                 (double)anglePhiView.Value,
