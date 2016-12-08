@@ -40,7 +40,11 @@ namespace Ddd.App
 
             foreach (var face in faces)
             {
-                face.SetBrightness(lightPoint);
+                face.SetBrightness(lightPoint, 
+                    (double)ia.Value,
+                    (double)ka.Value,
+                    (double)il.Value,
+                    (double)kd.Value);
                 face.SetVisibility(currentPlane.ViewPoint);
             }
 
@@ -55,7 +59,10 @@ namespace Ddd.App
                     .Select(currentPlane.ConvertToSquareCoordinates)
                     .ToArray();
 
-                var brush = new SolidBrush(Color.FromArgb(0, face.Brightness, 0));
+                var brush = new SolidBrush(Color.FromArgb(
+                    0, 
+                    (byte)(face.Brightness * 255), 
+                    0));
                 graphics.FillPolygon(brush, points);
 
                 foreach (var line in face.Distinct())
@@ -130,7 +137,7 @@ namespace Ddd.App
             currentPlane = PlaneFactory.CreateXY(DefaultPoint);
             var transformation = ProjectionsFactory.CreateAxonometricProjection(
                 (double)anglePsi.Value,
-                (double)-angleFi.Value);
+                (double)angleFi.Value);
             ApplyTransformation(transformation);
         }
 
@@ -160,7 +167,7 @@ namespace Ddd.App
             currentPlane = PlaneFactory.CreateXY(DefaultPoint);
             projection = ProjectionsFactory.CreateFrontalProjection();
             var transformation = ProjectionsFactory.CreateObliqueProjection(
-                (double)angleAlpha.Value,
+                (double)-angleAlpha.Value,
                 (double)lengthOblique.Value);
             ApplyTransformation(transformation);
         }
@@ -168,7 +175,6 @@ namespace Ddd.App
         private void ViewViewTransformationProjection(object sender, EventArgs e)
         {
             projection = ProjectionsFactory.CreatePerspectiveProjection((double)d.Value);
-            //projection = ProjectionsFactory.CreateFrontalProjection();
             currentPlane = PlaneFactory.CreateXY(DefaultPoint);
             currentPlane.ViewPoint = MathExtensions.CreatePolarPoint(
                 (double)anglePhiView.Value,
@@ -181,7 +187,6 @@ namespace Ddd.App
                 (double)d.Value);
             projection = viewTransformation;
             RedrawFigures();
-            //ApplyTransformation(viewTransformation);
         }
 
         private void ViewPerspectiveProjection(object sender, EventArgs e)
@@ -206,6 +211,11 @@ namespace Ddd.App
             var y = (double)setLightY.Value;
             var z = (double)setLightZ.Value;
             lightPoint = new DddObjects.Point(x, y, z);
+            RedrawFigures();
+        }
+
+        private void ChangeLightParameters(object sender, EventArgs e)
+        {
             RedrawFigures();
         }
     }

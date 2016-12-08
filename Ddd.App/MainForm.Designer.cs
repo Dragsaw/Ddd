@@ -96,6 +96,16 @@
             this.angleFi = new System.Windows.Forms.NumericUpDown();
             this.label18 = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.label32 = new System.Windows.Forms.Label();
+            this.kd = new System.Windows.Forms.NumericUpDown();
+            this.changeLightParamsButton = new System.Windows.Forms.Button();
+            this.label29 = new System.Windows.Forms.Label();
+            this.il = new System.Windows.Forms.NumericUpDown();
+            this.label30 = new System.Windows.Forms.Label();
+            this.ka = new System.Windows.Forms.NumericUpDown();
+            this.label31 = new System.Windows.Forms.Label();
+            this.ia = new System.Windows.Forms.NumericUpDown();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.button1 = new System.Windows.Forms.Button();
             this.label26 = new System.Windows.Forms.Label();
@@ -147,6 +157,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.anglePsi)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.angleFi)).BeginInit();
             this.tabPage3.SuspendLayout();
+            this.groupBox5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.kd)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.il)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ka)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ia)).BeginInit();
             this.groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.setLightZ)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.setLightY)).BeginInit();
@@ -883,6 +898,11 @@
             this.angleTheta.Name = "angleTheta";
             this.angleTheta.Size = new System.Drawing.Size(74, 20);
             this.angleTheta.TabIndex = 51;
+            this.angleTheta.Value = new decimal(new int[] {
+            90,
+            0,
+            0,
+            0});
             // 
             // viewTransformButton
             // 
@@ -1106,6 +1126,7 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.groupBox5);
             this.tabPage3.Controls.Add(this.groupBox4);
             this.tabPage3.Controls.Add(this.moveLightGroup);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
@@ -1115,6 +1136,158 @@
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Освещение";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.label32);
+            this.groupBox5.Controls.Add(this.kd);
+            this.groupBox5.Controls.Add(this.changeLightParamsButton);
+            this.groupBox5.Controls.Add(this.label29);
+            this.groupBox5.Controls.Add(this.il);
+            this.groupBox5.Controls.Add(this.label30);
+            this.groupBox5.Controls.Add(this.ka);
+            this.groupBox5.Controls.Add(this.label31);
+            this.groupBox5.Controls.Add(this.ia);
+            this.groupBox5.Location = new System.Drawing.Point(9, 166);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(235, 74);
+            this.groupBox5.TabIndex = 10;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Параметры";
+            // 
+            // label32
+            // 
+            this.label32.AutoSize = true;
+            this.label32.Location = new System.Drawing.Point(3, 47);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(23, 13);
+            this.label32.TabIndex = 8;
+            this.label32.Text = "Kd:";
+            // 
+            // kd
+            // 
+            this.kd.Location = new System.Drawing.Point(26, 45);
+            this.kd.Maximum = new decimal(new int[] {
+            99999,
+            0,
+            0,
+            0});
+            this.kd.Minimum = new decimal(new int[] {
+            99999,
+            0,
+            0,
+            -2147483648});
+            this.kd.Name = "kd";
+            this.kd.Size = new System.Drawing.Size(47, 20);
+            this.kd.TabIndex = 7;
+            this.kd.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // changeLightParamsButton
+            // 
+            this.changeLightParamsButton.Location = new System.Drawing.Point(129, 45);
+            this.changeLightParamsButton.Name = "changeLightParamsButton";
+            this.changeLightParamsButton.Size = new System.Drawing.Size(93, 23);
+            this.changeLightParamsButton.TabIndex = 6;
+            this.changeLightParamsButton.Text = "Применить";
+            this.changeLightParamsButton.UseVisualStyleBackColor = true;
+            this.changeLightParamsButton.Click += new System.EventHandler(this.ChangeLightParameters);
+            // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.Location = new System.Drawing.Point(152, 21);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(15, 13);
+            this.label29.TabIndex = 5;
+            this.label29.Text = "Il:";
+            // 
+            // il
+            // 
+            this.il.Location = new System.Drawing.Point(175, 19);
+            this.il.Maximum = new decimal(new int[] {
+            99999,
+            0,
+            0,
+            0});
+            this.il.Minimum = new decimal(new int[] {
+            99999,
+            0,
+            0,
+            -2147483648});
+            this.il.Name = "il";
+            this.il.Size = new System.Drawing.Size(47, 20);
+            this.il.TabIndex = 4;
+            this.il.Value = new decimal(new int[] {
+            230,
+            0,
+            0,
+            0});
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.Location = new System.Drawing.Point(76, 21);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(23, 13);
+            this.label30.TabIndex = 3;
+            this.label30.Text = "Ka:";
+            // 
+            // ka
+            // 
+            this.ka.Location = new System.Drawing.Point(99, 19);
+            this.ka.Maximum = new decimal(new int[] {
+            99999,
+            0,
+            0,
+            0});
+            this.ka.Minimum = new decimal(new int[] {
+            99999,
+            0,
+            0,
+            -2147483648});
+            this.ka.Name = "ka";
+            this.ka.Size = new System.Drawing.Size(47, 20);
+            this.ka.TabIndex = 2;
+            this.ka.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.Location = new System.Drawing.Point(3, 21);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(19, 13);
+            this.label31.TabIndex = 1;
+            this.label31.Text = "Ia:";
+            // 
+            // ia
+            // 
+            this.ia.Location = new System.Drawing.Point(26, 19);
+            this.ia.Maximum = new decimal(new int[] {
+            99999,
+            0,
+            0,
+            0});
+            this.ia.Minimum = new decimal(new int[] {
+            99999,
+            0,
+            0,
+            -2147483648});
+            this.ia.Name = "ia";
+            this.ia.Size = new System.Drawing.Size(47, 20);
+            this.ia.TabIndex = 0;
+            this.ia.Value = new decimal(new int[] {
+            25,
+            0,
+            0,
+            0});
             // 
             // groupBox4
             // 
@@ -1376,6 +1549,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.anglePsi)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.angleFi)).EndInit();
             this.tabPage3.ResumeLayout(false);
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.kd)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.il)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ka)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ia)).EndInit();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.setLightZ)).EndInit();
@@ -1476,5 +1655,15 @@
         private System.Windows.Forms.NumericUpDown setLightY;
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.NumericUpDown setLightX;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.Label label32;
+        private System.Windows.Forms.NumericUpDown kd;
+        private System.Windows.Forms.Button changeLightParamsButton;
+        private System.Windows.Forms.Label label29;
+        private System.Windows.Forms.NumericUpDown il;
+        private System.Windows.Forms.Label label30;
+        private System.Windows.Forms.NumericUpDown ka;
+        private System.Windows.Forms.Label label31;
+        private System.Windows.Forms.NumericUpDown ia;
     }
 }

@@ -75,24 +75,27 @@ namespace Ddd.Lib.Objects
             }
         }
 
-        public void SetBrightness(Point lightPoint)
+        public void SetBrightness(Point lightPoint, double ia, double ka, double il, double kd)
         {
-            Brightness = GetBrightness(lightPoint);
+            Brightness = GetBrightness(lightPoint, ia, ka, il, kd);
         }
 
         public bool Visible { get; set; }
-        public byte Brightness { get; set; }
+        public double Brightness { get; set; }
 
         public void SetVisibility(Point viewPoint)
         {
             Visible = IsVisible(viewPoint);
         }
 
-        public byte GetBrightness(Point lightPoint)
+        public double GetBrightness(Point lightPoint, double ia, double ka, double il, double kd)
         {
             var vector = MathExtensions.Vectorize(lightPoint, CentralPoint);
             var angleCos = MathExtensions.Cos(Normal, vector);
-            return (byte)((angleCos < 0.01 ? (byte)0 : (byte)(200 * angleCos)) + 50);
+            angleCos = angleCos < 0 ? 0 : angleCos;
+            var brightness = ia * ka + il * kd * angleCos;
+            brightness = brightness / 255;
+            return brightness;
         }
 
         public bool IsVisible(Point viewPoint)
@@ -109,7 +112,12 @@ namespace Ddd.Lib.Objects
                 var xAvg = points.Average(p => p.X);
                 var yAvg = points.Average(p => p.Y);
                 var zAvg = points.Average(p => p.Z);
-                return new Point(xAvg, yAvg, zAvg);
+                var point = new Point(xAvg, yAvg, zAvg);
+                if (points.Count() < 4)
+                {
+                    point.Z -= 60;
+                }
+                return point;
             }
         }
 
