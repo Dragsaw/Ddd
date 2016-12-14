@@ -75,9 +75,9 @@ namespace Ddd.Lib.Transformations
         public static ITransformation CreatePerspectiveProjection(double d)
         {
             var transformationAction = (Func<Point, Point>)(p =>{
-                var z = SysMath.Abs(p.Z) <= 0.1f ? 0.1 : p.Z;
-                var x = p.X * d / p.Z;
-                var y = p.Y * d / p.Z;
+                var z = SysMath.Abs(p.Z) <= 0.1 ? 0.1 : SysMath.Abs(p.Z);
+                var x = p.X * d / z;
+                var y = p.Y * d / z;
                 z = d;
                 return new Point(x, y, z);
             });

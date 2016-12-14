@@ -78,7 +78,7 @@ namespace Ddd.Lib.Transformations
             var action = (Func<Point, Point>)(point =>
             {
                 var p = new Point(point.MultiplyBy(transformationMatrix));
-                var z = SysMath.Abs(p.Z) <= 0.1f ? 0.1 : p.Z;
+                var z = SysMath.Abs(p.Z) <= 0.1f ? 0.1 : SysMath.Abs(p.Z);
                 var x = p.X * d / p.Z;
                 var y = p.Y * d / p.Z;
                 z = d;

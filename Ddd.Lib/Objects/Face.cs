@@ -86,6 +86,7 @@ namespace Ddd.Lib.Objects
         public void SetVisibility(Point viewPoint)
         {
             Visible = IsVisible(viewPoint);
+            //Visible = true;
         }
 
         public double GetBrightness(Point lightPoint, double ia, double ka, double il, double kd)
